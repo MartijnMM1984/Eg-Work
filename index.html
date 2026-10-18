@@ -416,12 +416,13 @@ function editItem(k,x){const L=LISTS[k];form(L.t,L.f,x,o=>{Object.assign(x,o);sa
 function newItem(k){const L=LISTS[k];form("Nieuw – "+L.t,L.f,{},o=>{S[k].push(Object.assign({id:uid(),c:iso(new Date())},o));save();render()})}
 function ensure(d,s){S.roster[d]=S.roster[d]||{};S.roster[d][s]=S.roster[d][s]||[]}
 function grp(gi){
- const g=S.counts[gi];
+ const g=S.counts[gi],sel=(t,fn,c)=>g.items.length?pick(t,g.items.map((it,ii)=>[it.n,()=>fn(it,ii),c])):msg("Er zijn nog geen subcategorieën.");
  pick("Beheer – "+g.name,[
   ["Subcategorie toevoegen",()=>form("Nieuwe subcategorie",[["n","Naam"]],{},o=>{g.items.push({n:o.n,done:{}});save();render()})],
+  ["Subcategorie hernoemen",()=>sel("Welke subcategorie hernoemen?",it=>form("Subcategorie hernoemen",[["n","Naam"]],it,o=>{it.n=o.n;save();render()}))],
+  ["Subcategorie verwijderen",()=>sel("Welke subcategorie verwijderen?",(it,ii)=>ask("Subcategorie "+it.n+" verwijderen?",()=>{g.items.splice(ii,1);save();render()}),"r")],
   ["Categorie toevoegen",()=>form("Nieuwe categorie",[["name","Naam"]],{},o=>{S.counts.push({name:o.name,items:[]});cG=S.counts.length-1;save();render()})],
   ["Categorie hernoemen",()=>form("Categorie hernoemen",[["name","Naam"]],g,o=>{g.name=o.name;save();render()})],
-  ...g.items.map((it,ii)=>["Subcategorie verwijderen: "+it.n,()=>{g.items.splice(ii,1);save();render()},"r"]),
   ["Categorie verwijderen",()=>ask("Categorie "+g.name+" met alle subcategorieën verwijderen?",()=>{S.counts.splice(gi,1);save();render()}),"r"]]);
 }
 document.addEventListener("click",e=>{
