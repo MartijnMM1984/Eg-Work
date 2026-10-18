@@ -107,6 +107,10 @@ nav button{font-size:11px;padding:7px 0 5px}nav button span{font-size:17px}.fab{
 .ph{position:relative;border-radius:28px;overflow:hidden;background:radial-gradient(ellipse at center,#fff 35%,#cdd0d4 100%);height:200px;display:flex;align-items:center;justify-content:center;margin:12px 0}
 .ph img{max-height:72%;max-width:62%;object-fit:contain}.ph.pic img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
 .ph button{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:#666c;color:#fff;border:0;font-size:20px;cursor:pointer}
+.vc{border:2px solid var(--ln);border-radius:16px;padding:11px 13px;margin:8px 0;background:var(--card);cursor:pointer}
+.add.rnd{background:var(--green);color:#fff;border-radius:50%;width:40px;height:40px;font-size:24px;flex:none;line-height:1}
+.vr{display:flex;align-items:center;gap:8px;border:2px solid var(--ln);border-radius:18px;padding:11px 14px;margin:9px 0;font-size:15px}
+.vr input,.vr select{border:0;background:none;padding:0;flex:1;min-width:0;font-size:15px;color:var(--tx);border-radius:0;width:auto}
 </style>
 </head>
 <body>
@@ -233,7 +237,7 @@ function planning(){
 }
 function brief(){
  const n=iso(new Date()),R=rows(n),cm=mon(),hi=S.todo.filter(x=>!x.x&&x.p==="Hoog"),vp=S.vp[S.vp.length-1],ok=vp&&vp.slice(0,7)===cm;
- return `<div class="card big"><b class="ct">Manager Briefing</b><div class="bl">👥 Vandaag: ${R.length} medewerkers ingepland<br>🟠 ${S.todo.filter(x=>!x.x).length} open taken<br>🔴 ${hi.length} hoge prioriteit<br>🤒 ${R.filter(r=>r.a==="ziek").length} ziek<br>🔄 ${R.filter(r=>r.r).length} vervanger<br>📦 Tellingen ${MN()}${S.counts.map(g=>`<br>${esc(g.name)}: ${vis(g,cm).filter(i=>(i.done||{})[cm]).length} / ${vis(g,cm).length} gereed`).join("")}${hi.length?`<br>⚠️ Extra aandacht: ${hi.map(x=>esc(x.t)).join(", ")}`:""}</div>
+ return `<div class="card big"><b class="ct">Manager Briefing</b><div class="bl">👥 Vandaag: ${R.length} medewerkers ingepland<br>🟠 ${S.todo.filter(x=>!x.x).length} open taken<br>🔴 ${hi.length} hoge prioriteit<br>🤒 ${R.filter(r=>r.a==="ziek").length} ziek<br>🔄 ${R.filter(r=>r.r).length} vervanger<br>📦 Tellingen ${MN()}${S.counts.map(g=>`<br>${esc(g.name)}: ${vis(g,cm).filter(i=>(i.done||{})[cm]).length} / ${vis(g,cm).length} gereed`).join("")}${hi.length?`<br>⚠️ Extra aandacht: ${hi.map(x=>esc(x.t)).join(", ")}`:""}${visitBrief()}</div>
  <div class="vp" data-a="vp"><b>VILLA PARDOES</b><div class="mu" style="font-size:13px;margin-top:3px">${ok?"Laatst verwerkt: "+vp.split("-").reverse().join("-"):"Nog niet afgeslagen deze maand ›"}</div></div></div>`;
 }
 function sparCard(){
@@ -466,9 +470,40 @@ $("#pf").addEventListener("change",e=>{
   try{localStorage.setItem("egphoto",c.toDataURL("image/jpeg",.78))}catch(x){msg("De foto is te groot om op te slaan.")}render();e.target.value=""};im.src=r.result};r.readAsDataURL(f);
 });
 
+const vcmp=(a,b)=>((a.d||"")+(a.tm||"")).localeCompare((b.d||"")+(b.tm||""));
+function visitBrief(){
+ const t=iso(new Date()),m=new Date();m.setDate(m.getDate()+1);
+ const f=(d,l)=>S.visits.filter(v=>v.d===d).sort(vcmp).map(v=>`<br>📅 ${l}: ${v.tm?esc(v.tm)+" · ":""}${v.k==="Sollicitant"?"Sollicitant: ":""}${esc(v.t)}${l==="BEZOEK VANDAAG"&&v.n?" — "+esc(v.n.replace(/\n/g," ")):""}`).join("");
+ return f(t,"BEZOEK VANDAAG")+f(iso(m),"MORGEN");
+}
+function VisitsV(){
+ const td=iso(new Date()),up=S.visits.filter(v=>(v.d||"")>=td).sort(vcmp),past=S.visits.filter(v=>(v.d||"")<td).sort(vcmp).reverse();
+ const card=v=>`<div class="vc" data-a="vedit:${v.id}"><div class="row"><b style="font-size:12px;color:var(--green)">${fd(v.d)}${v.tm?" · "+esc(v.tm):""}</b><span class="mu" style="font-size:10px;font-weight:700;letter-spacing:.05em">${esc((v.k||"Overig").toUpperCase())}</span></div><div style="font-size:15px;font-weight:700;margin-top:5px">${esc(v.t)}</div>${v.n?`<div class="mu" style="margin-top:4px">${esc(v.n.length>90?v.n.slice(0,90)+"…":v.n)}</div>`:""}</div>`;
+ return `<div class="row"><h2>Bezoeken &amp; afspraken</h2><button class="add rnd" data-a="vadd" aria-label="Afspraak toevoegen">+</button></div><div class="mu" style="font-size:13px;margin-bottom:6px">Audits, monteurs en andere afspraken</div>
+ <div class="sec">Komende afspraken</div>${up.map(card).join("")||'<div class="card mu">Geen komende afspraken</div>'}<div class="sec">Afgelopen</div>${past.map(card).join("")||'<div class="mu" style="margin:8px 4px">Nog geen afgelopen afspraken</div>'}`;
+}
+function visitForm(v){
+ const x=v||{d:iso(new Date()),tm:"09:00",t:"",n:""},TY=["Hoofdkantoor","Monteur","Leverancier","Sollicitant","Overig"],k0=x.k||"Hoofdkantoor";
+ openM(`<h2 style="text-align:center">${v?"Afspraak wijzigen":"Afspraak toevoegen"}</h2>
+ <div class="vr"><span>Type:</span><select id="vk">${TY.map(o=>`<option ${o===k0?"selected":""}>${o}</option>`).join("")}</select></div>
+ <div class="vr"><span>Datum:</span><input type="date" id="vd" value="${esc(x.d||"")}"></div>
+ <div class="vr"><span>Tijd:</span><input type="time" id="vt" value="${esc(x.tm||"")}"></div>
+ <div class="vr"><input type="text" id="vw" placeholder="Wie/wat komt er?" value="${esc(x.t)}"></div>
+ <textarea id="vn" rows="4" placeholder="Reden / korte notitie" style="border-radius:18px;border-width:2px">${esc(x.n||"")}</textarea>
+ <div class="two"><button class="btn g" id="vc">Annuleren</button><button class="btn g" id="vs">Opslaan</button></div>${v?'<button class="btn r" id="vx" style="width:100%;margin-top:8px">Verwijderen</button>':""}`);
+ $("#vc").onclick=closeM;
+ $("#vs").onclick=()=>{const w=$("#vw").value.trim();if(!w)return;const o={k:$("#vk").value,d:$("#vd").value,tm:$("#vt").value,t:w,n:$("#vn").value.trim()};
+  if(v)Object.assign(v,o);else S.visits.push(Object.assign({id:uid()},o));save();render();closeM()};
+ if(v)$("#vx").onclick=()=>ask("Afspraak verwijderen?",()=>{S.visits=S.visits.filter(y=>y!==v);save();render()});
+}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-a]");if(!t)return;const[a,x]=t.dataset.a.split(":");
+ if(a==="vadd")visitForm(null);else if(a==="vedit"){const v=S.visits.find(y=>y.id===x);if(v)visitForm(v)}
+});
+
 function render(){
  let h;const o0=$(".osc"),sl=o0?o0.scrollLeft:0;
- if(view==="roster")h=Roster();else if(view==="counts")h=Counts();else if(view==="info")h=Info();else if(view==="office")h=OfficeV();else if(view==="todo")h=TodoV();else if(view==="tcfg")h=TcfgV();else if(view==="stn")h=StnV();
+ if(view==="roster")h=Roster();else if(view==="counts")h=Counts();else if(view==="info")h=Info();else if(view==="office")h=OfficeV();else if(view==="todo")h=TodoV();else if(view==="tcfg")h=TcfgV();else if(view==="stn")h=StnV();else if(view==="visits")h=VisitsV();
  else if(view&&LISTS[view])h=ListV(view);
  else h=tab==="home"?Home():tab==="team"?Team():Manager();
  $("#app").innerHTML=h;const o1=$(".osc");if(o1)o1.scrollLeft=sl;$("#back").hidden=!view;
@@ -519,3 +554,4 @@ if(!nm())setTimeout(askName,2000);
 </script>
 </body>
 </html>
+
