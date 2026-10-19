@@ -144,6 +144,13 @@ h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 @keyframes wave{0%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-10deg)}30%{transform:rotate(16deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(12deg)}62%,100%{transform:rotate(0)}}
 .fw{text-align:center;color:var(--mu);font-size:14px;margin:-8px 0 12px}
 @media (prefers-reduced-motion:reduce){.wv{animation:none}}
+
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.ph2{aspect-ratio:1;border-radius:12px;border:2px solid var(--ln);overflow:hidden;background:var(--card);position:relative;cursor:pointer}
+.ph2 img{width:100%;height:100%;object-fit:cover;display:block}.ph2 .cap{position:absolute;left:0;right:0;bottom:0;background:#000b;color:#fff;font-size:10px;padding:3px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cam{background:var(--green);color:#fff;border:0;border-radius:50%;width:34px;height:34px;font-size:17px;cursor:pointer;flex:none}
+.pbtn{display:block;position:relative;text-align:center;padding:13px;border-radius:14px;margin:9px 0;overflow:hidden;font-size:15px}.pbtn input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;font-size:0}
+.rh{display:flex;gap:8px;align-items:center}
 </style>
 </head>
 <body>
@@ -155,7 +162,7 @@ h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 <script>
 (function(){try{if(/Android/i.test(navigator.userAgent)&&matchMedia("(display-mode: standalone)").matches){var e=document.getElementById("splash");if(e)e.remove()}}catch(x){}})();
 const SH=["Vroeg","Laat","Nacht","Bakery 1","Bakery 2","Tussendienst"];
-const DEF={emp:[],av:[],lb:0,lbz:"",po:[],ag:{},einit:true,st:{n:"Esso Neerduist",a:"rijksweg a1 nr 3",p:"3821 CH Amersfoort"},mp:{},s3init:false,s2init:false,sinit:false,tinit:false,ot:[],oinit:false,cinit:false,rep:{},sp:{t:"SPAR Actie",d:"",e:"",items:[]},vp:[],roster:{},abs:{},todo:[],logs:[],counts:[],visits:[],office:[],notes:[],spar:[],info:""};
+const DEF={emp:[],photos:[],av:[],lb:0,lbz:"",po:[],ag:{},einit:true,st:{n:"Esso Neerduist",a:"rijksweg a1 nr 3",p:"3821 CH Amersfoort"},mp:{},s3init:false,s2init:false,sinit:false,tinit:false,ot:[],oinit:false,cinit:false,rep:{},sp:{t:"SPAR Actie",d:"",e:"",items:[]},vp:[],roster:{},abs:{},todo:[],logs:[],counts:[],visits:[],office:[],notes:[],spar:[],info:""};
 const REP=["Niet herhalen","Elke maandag","Elke dinsdag","Elke woensdag","Elke donderdag","Elke vrijdag","Elke zaterdag","Elke zondag"];
 const LISTS={
  todo:{t:"To Do",f:[["t","Titel"],["b","Omschrijving","area"],["p","Prioriteit","select",["Hoog","Normaal","Laag"]],["r","Herhalen","select",REP],["u","Onderwerp"]]},
@@ -294,7 +301,7 @@ function Home(){
  ${bkBanner()}${sec("Vandaag")}${planning()}${brief()}
  ${sec("Management")}<div class="grid">${tl(["roster","p"],"Wie werkt er",rows(iso(n)).length)}${tl(["logs","l"],"Logboek","")}${tl(["todo","t"],"To Do",S.todo.filter(x=>!x.x).length)}${tl(["counts","c"],"Tellingen",S.counts.reduce((a,g)=>a+vis(g,cm).filter(i=>!(i.done||{})[cm]).length,0))}</div>
  ${sec("Aandacht")}<div class="card big"><b class="ct">Extra aandacht</b>${hi.map(x=>`<div class="mu" data-edit="todo:${x.id}" style="cursor:pointer;font-size:13px">• ${esc(x.t)}</div>`).join("")||'<div class="mu">Geen urgente taken.</div>'}</div>
- <div class="card big"><b class="ct">Snelle notitie</b><textarea id="qn" rows="3" placeholder="Schrijf hier een korte notitie..."></textarea><div class="two"><button class="btn g" data-a="qs">Notitie opslaan</button><button class="btn g" data-go="notes">Notities</button></div></div>
+ <div class="card big"><b class="ct">Snelle notitie</b><textarea id="qn" rows="3" placeholder="Schrijf hier een korte notitie..."></textarea><div class="two"><button class="btn g" data-a="qs">Notitie opslaan</button><button class="btn g" data-a="pcam">📷 Foto</button><button class="btn g" data-go="notes">Notities</button></div></div>
  ${sec("Acties")}${sparCard()}`;
 }
 function Roster(){return `<h2>Wie werkt er</h2>`+planning()}
@@ -317,7 +324,7 @@ document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;const[a,...r]=t.dataset.a.split(":"),v=r.join(":");
  if(a==="day"){day=v;render()}
  else if(a==="wk"){const x=fromIso(day);x.setDate(x.getDate()+ +v);day=iso(x);render()}
- else if(a==="menu")pick("Menu",[["Medewerkers beheren",()=>{tab="team";view=null;render()}],["Tellingen instellen",()=>{view="tcfg";render()}],["Mijn naam wijzigen",askName],["Donker / licht",theme],["Info station",()=>{view="stn";render()}],["Back-up maken",backupMenu],["Back-up terugzetten",restorePick],["App-info",aboutApp],["Alles wissen en opnieuw beginnen",()=>ask("Alle gegevens wissen en opnieuw beginnen?",()=>{S=JSON.parse(JSON.stringify(DEF));merge({});day=iso(new Date());tab="home";view=null;save();render()}),"r"]]);
+ else if(a==="menu")pick("Menu",[["Medewerkers beheren",()=>{tab="team";view=null;render()}],["Tellingen instellen",()=>{view="tcfg";render()}],["Mijn naam wijzigen",askName],["Donker / licht",theme],["Info station",()=>{view="stn";render()}],["Back-up maken",backupMenu],["Back-up terugzetten",restorePick],["App-info",aboutApp],["Alles wissen en opnieuw beginnen",()=>ask("Alle gegevens wissen en opnieuw beginnen?",()=>{idbClear();thumbs={};S=JSON.parse(JSON.stringify(DEF));merge({});day=iso(new Date());tab="home";view=null;save();render()}),"r"]]);
  else if(a==="padd"){if(!S.emp.length){msg("Voeg eerst medewerkers toe via het menu (Medewerkers beheren).");return}
   form("Medewerker inplannen",[["n","Medewerker","emp"],["s","Dienst","select",SH]],{s:"Vroeg"},o=>{ensure(day,o.s);if(!S.roster[day][o.s].includes(o.n))S.roster[day][o.s].push(o.n);save();render()})}
  else if(a==="row"){const[d,s,...q]=v.split("|"),n=q.join("|");S.abs[d]=S.abs[d]||{};S.rep[d]=S.rep[d]||{};
@@ -567,6 +574,7 @@ document.addEventListener("click",e=>{
   add("sparv","SPAR en push orders",[...S.sp.items.filter(x=>m(x.n,S.sp.t)).map(x=>({g:"sparv",t:x.n,s:"Promo · € "+x.p})),...S.po.filter(o=>m(o.bon,o.d,...(o.items||[]).map(i=>i.n))).map(o=>({g:"sparv",t:"Push order · "+dnl(o.d),s:[o.bon&&"Bonnummer "+o.bon,(o.items||[]).length+" producten"].filter(Boolean).join(" · ")}))]);
   add("office","Takenlijst kantoor",S.ot.filter(x=>m(x.n)).map(x=>({g:"office",t:x.n,s:""})));
   const ci=[];S.counts.forEach((g,gi)=>g.items.forEach(it=>{if(m(it.n,g.name))ci.push({g:"counts",i:gi,t:it.n,s:g.name})}));add("counts","Tellingen",ci);
+  add("notes","Foto's",S.photos.filter(x=>m(x.c)).map(x=>({g:"notes",t:x.c||"Foto",s:"Foto · "+dnl(x.d)})));
   add("emp","Medewerkers",S.emp.filter(n=>m(n,S.ag[n])).map(n=>({g:"emp",t:n,s:S.ag[n]||""})));
   if(!G.length){out.innerHTML='<div class="snh"><b>Niets gevonden</b><div class="mu">Geen resultaten voor "'+esc(q)+'"</div></div>';return}
   out.innerHTML=G.map(([lab,arr])=>`<div class="sg">${lab} (${arr.length})</div>`+arr.slice(0,30).map(r=>`<div class="sr" data-sg="${r.g}" data-si="${r.i==null?"":r.i}"><b>${hl(r.t,q)}</b>${r.s?`<div class="mu" style="font-size:12px">${hl(String(r.s).slice(0,110),q)}</div>`:""}</div>`).join("")).join("");
@@ -589,7 +597,7 @@ function seedEmp(){
 /* ---------- back-up ---------- */
 function backupText(){
  let nm="";try{nm=localStorage.getItem("egname")||""}catch(e){}
- return JSON.stringify({app:"eg-work",v:1,date:new Date().toISOString(),name:nm,data:S});
+ return JSON.stringify({app:"eg-work",v:1,date:new Date().toISOString(),name:nm,data:Object.assign({},S,{photos:[]})});
 }
 function backupName(){return "eg-work-backup-"+iso(new Date())+".json"}
 function copyText(t){
@@ -601,7 +609,7 @@ function backupMenu(){
  const t=backupText(),nmf=backupName(),o=[];
  o.push(["Opslaan als bestand",()=>{
   try{const u=URL.createObjectURL(new Blob([t],{type:"application/json"})),a=document.createElement("a");a.href=u;a.download=nmf;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(u)},3000);
-   bkMark();setTimeout(()=>msg("Back-up opgeslagen als "+nmf+" (meestal in je map Downloads). Bewaar dit bestand goed."),400)}
+   bkMark();setTimeout(()=>msg("Back-up opgeslagen als "+nmf+" (meestal in je map Downloads). Bewaar dit bestand goed. Foto's zitten niet in de back-up."),400)}
   catch(e){msg("Opslaan als bestand lukt niet. Gebruik 'Kopieer als tekst'.")}}]);
  if(navigator.share)o.push(["Delen via WhatsApp, Drive, mail…",()=>{
   const f=new File([t],nmf,{type:"text/plain"});
@@ -615,7 +623,7 @@ function doRestore(txt,name){
  const d=b&&b.app==="eg-work"&&b.data&&typeof b.data==="object"?b.data:null;
  if(!d||!Array.isArray(d.emp)){msg("Dit is geen geldige EG Work back-up.");return}
  ask("Back-up terugzetten? Alle huidige gegevens op dit toestel worden vervangen.",()=>{
-  merge(d);if(b.name){try{localStorage.setItem("egname",b.name)}catch(e){}}
+  const keepPh=S.photos;merge(d);S.photos=keepPh||[];if(b.name){try{localStorage.setItem("egname",b.name)}catch(e){}}
   day=iso(new Date());tab="home";view=null;save();render();setTimeout(()=>msg("Back-up teruggezet: "+S.emp.length+" medewerkers en alle andere gegevens."),300)});
 }
 function restorePick(){
@@ -678,6 +686,57 @@ document.addEventListener("click",e=>{
  if(a==="pcopy")pcopy();
  else if(a==="bkn")backupMenu();
  else if(a==="bkl"){S.lbz=iso(new Date());save();render()}
+});
+
+/* ---------- foto's bij notities ---------- */
+let thumbs={},thLoad=false;
+const idb=()=>new Promise((res,rej)=>{try{const r=indexedDB.open("egphotos",1);r.onupgradeneeded=()=>r.result.createObjectStore("p");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}});
+const idbTx=(m,f)=>idb().then(db=>new Promise((res,rej)=>{const t=db.transaction("p",m),st=t.objectStore("p"),q=f(st);t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)}));
+const idbPut=(k,v)=>idbTx("readwrite",s=>s.put(v,k)),idbGet=k=>idbTx("readonly",s=>s.get(k)),idbDel=k=>idbTx("readwrite",s=>s.delete(k));
+const idbClear=()=>idbTx("readwrite",s=>s.clear()).catch(()=>{});
+function procImg(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();
+ im.onload=()=>{const mk=(max,q)=>new Promise(r=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext("2d").drawImage(im,0,0,c.width,c.height);try{c.toBlob(b=>r(b||file),"image/jpeg",q)}catch(e){r(file)}});
+  Promise.all([mk(1600,.78),mk(320,.7)]).then(([full,thumb])=>{URL.revokeObjectURL(u);res({full,thumb})},rej)};
+ im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("img"))};im.src=u})}
+function NotesV(){
+ const miss=S.photos.filter(p=>thumbs[p.id]===undefined);
+ if(miss.length&&!thLoad){thLoad=true;Promise.all(miss.map(p=>idbGet(p.id).then(v=>{thumbs[p.id]=v&&v.thumb?URL.createObjectURL(v.thumb):""}).catch(()=>{thumbs[p.id]=""}))).then(()=>{thLoad=false;if(view==="notes")render()})}
+ const ph=S.photos.slice().sort((a,b)=>(b.d||"").localeCompare(a.d||"")||0),nt=S.notes.slice().reverse();
+ return `<div class="row"><h2>Notities</h2><span class="rh"><button class="cam" data-a="pcam" aria-label="Foto toevoegen">📷</button><button class="add" data-new="notes" aria-label="Notitie toevoegen">+</button></span></div>
+ <div class="sec">Foto's (${ph.length})</div>
+ ${ph.length?`<div class="pg">${ph.map(p=>`<div class="ph2" data-a="pview:${p.id}">${thumbs[p.id]?`<img src="${thumbs[p.id]}" alt="">`:""}${p.c?`<div class="cap">${esc(p.c)}</div>`:""}</div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen foto\'s. Tik op 📷 om er een te maken.</div>'}
+ <div class="sec">Getypte notities (${nt.length})</div>
+ ${nt.map(x=>`<div class="vc" data-edit="notes:${x.id}"><b style="font-size:14px">${esc(x.t||"Notitie")}</b>${x.c?`<span class="mu" style="font-size:11px;margin-left:8px">${dnl(x.c)}</span>`:""}${x.n&&x.n!==x.t?`<div class="mu" style="margin-top:3px">${esc(x.n.length>90?x.n.slice(0,90)+"…":x.n)}</div>`:""}</div>`).join("")||'<div class="mu" style="margin:8px 2px">Nog geen notities. Tik op + om er een te typen.</div>'}`;
+}
+async function addFiles(fs){
+ const added=[];
+ for(const f of fs){
+  try{const r=await procImg(f),id=uid();await idbPut(id,r);thumbs[id]=URL.createObjectURL(r.thumb);const p={id,d:iso(new Date()),c:""};S.photos.push(p);added.push(p)}
+  catch(e){msg("Foto opslaan lukt niet ("+((e&&(e.name||e.message))||"onbekende fout")+"). Probeer het in Chrome via de link of het startscherm-icoon.");break}}
+ if(added.length){save();render();if(added.length===1)photoView(added[0].id)}
+}
+function photoPick(){
+ openM(`<h2 style="text-align:center">Foto toevoegen</h2>
+ <label class="btn pbtn">📷 Foto maken<input type="file" accept="image/*" capture="environment" id="pc1"></label>
+ <label class="btn g pbtn">🖼️ Kies uit galerij<input type="file" accept="image/*" multiple id="pc2"></label>
+ <button class="btn g" id="pcx" style="width:100%;margin-top:6px">Annuleren</button>`);
+ const h=e=>{const fs=[...(e.target.files||[])];if(!fs.length)return;closeM();addFiles(fs)};
+ $("#pc1").onchange=h;$("#pc2").onchange=h;$("#pcx").onclick=closeM;
+}
+function photoView(id){
+ const p=S.photos.find(x=>x.id===id);if(!p)return;
+ openM(`<img id="pvi" src="${thumbs[id]||""}" alt="" style="width:100%;max-height:56vh;object-fit:contain;border-radius:12px;background:#0003"><div class="mu" style="margin-top:6px">${dnl(p.d)}</div><label>Omschrijving</label><input type="text" id="phc" placeholder="Bijvoorbeeld: schade deur, bon, display…" value="${esc(p.c||"")}">
+ <div class="two"><button class="btn r" id="phx">Verwijderen</button><button class="btn g" id="phs">Delen</button><button class="btn" id="pho">Opslaan</button></div>`);
+ let blob=null;idbGet(id).then(v=>{if(v&&v.full){blob=v.full;const e=$("#pvi");if(e)e.src=URL.createObjectURL(v.full)}}).catch(()=>{});
+ $("#pho").onclick=()=>{p.c=$("#phc").value.trim();save();render();closeM()};
+ $("#phx").onclick=()=>ask("Foto verwijderen?",()=>{S.photos=S.photos.filter(x=>x!==p);idbDel(id).catch(()=>{});delete thumbs[id];save();render()});
+ $("#phs").onclick=()=>{if(!blob)return;const f=new File([blob],"foto-"+p.d+".jpg",{type:"image/jpeg"});
+  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:p.c||"Foto"}).catch(()=>{});else msg("Delen van foto's wordt niet ondersteund in deze browser.")};
+}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-a]");if(!t)return;const[a,...r]=t.dataset.a.split(":"),v=r.join(":");
+ if(a==="pcam")photoPick();
+ else if(a==="pview")photoView(v);
 });
 
 /* ---------- SPAR scherm + push orders ---------- */
@@ -743,7 +802,7 @@ if(typeof window!=="undefined"&&window.addEventListener)window.addEventListener(
 
 function render(){
  let h;const o0=$(".osc"),sl=o0?o0.scrollLeft:0;
- if(view==="roster")h=Roster();else if(view==="counts")h=Counts();else if(view==="info")h=Info();else if(view==="office")h=OfficeV();else if(view==="todo")h=TodoV();else if(view==="tcfg")h=TcfgV();else if(view==="stn")h=StnV();else if(view==="visits")h=VisitsV();else if(view==="sparv")h=SparV();
+ if(view==="roster")h=Roster();else if(view==="counts")h=Counts();else if(view==="info")h=Info();else if(view==="office")h=OfficeV();else if(view==="todo")h=TodoV();else if(view==="tcfg")h=TcfgV();else if(view==="stn")h=StnV();else if(view==="visits")h=VisitsV();else if(view==="notes")h=NotesV();else if(view==="sparv")h=SparV();
  else if(view&&LISTS[view])h=ListV(view);
  else h=tab==="home"?Home():tab==="team"?Team():Manager();
  $("#app").innerHTML=h;const o1=$(".osc");if(o1)o1.scrollLeft=sl;$("#back").hidden=!view;schedSync();
