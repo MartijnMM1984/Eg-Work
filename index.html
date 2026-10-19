@@ -271,7 +271,7 @@ const AVT=["Vakantie","Verlof","Ziek"];
 function avP(n,d){return S.av.find(x=>x.n===n&&x.s<=d&&d<=(x.e||x.s))}
 function aOf(d,n){const a=(S.abs[d]||{})[n];if(a!==undefined)return a;const p=avP(n,d);return p?p.t.toLowerCase():undefined}
 function rows(d){const r=S.roster[d]||{},p=S.rep[d]||{},o=[];SH.forEach(s=>(r[s]||[]).forEach(n=>o.push({s,n,a:aOf(d,n),r:p[n]})));return o}
-function planning(){
+function planning(tools){
  const d=fromIso(day),mo=new Date(d);mo.setDate(d.getDate()-((d.getDay()+6)%7));
  const ds=[...Array(7)].map((_,i)=>{const x=new Date(mo);x.setDate(mo.getDate()+i);return x}),su=ds[6],AB=["Zo","Ma","Di","Wo","Do","Vr","Za"];
  const R=rows(day);
@@ -280,8 +280,8 @@ function planning(){
  <h3>${day===iso(new Date())?"Vandaag · ":""}${d.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"})}</h3>
  ${R.map(r=>`<div class="pr" data-a="row:${day}|${r.s}|${esc(r.n)}"><div><b>${esc(r.n)}</b>${S.ag[r.n]?`<span class="agb ${S.ag[r.n]}">${S.ag[r.n]}</span>`:""}${r.a?` <span class="ab ${r.a}">· ${r.a.toUpperCase()}</span>`:""}${r.r?`<div class="mu">Vervanger: ${esc(r.r)}</div>`:""}</div><span class="sh">${r.s.toUpperCase()} · ${SHT[r.s]}</span></div>`).join("")||'<div class="mu" style="padding:12px 0">Niemand ingepland.</div>'}
  <button class="btn g" style="margin-top:12px;width:100%" data-a="padd">+ Medewerker inplannen</button>
- <button class="btn g" style="margin-top:8px;width:100%" data-a="pcopy">⧉ Planning kopiëren…</button>
- <button class="btn g" style="margin-top:8px;width:100%" data-a="pimp">📥 Rooster importeren (Excel)</button></div>`;
+ ${tools?`<button class="btn g" style="margin-top:8px;width:100%" data-a="pcopy">⧉ Planning kopiëren…</button>
+ <button class="btn g" style="margin-top:8px;width:100%" data-a="pimp">📥 Rooster importeren (Excel)</button>`:""}</div>`;
 }
 function brief(){
  const n=iso(new Date()),R=rows(n),cm=mon(),hi=S.todo.filter(x=>!x.x&&x.p==="Hoog"),vp=S.vp[S.vp.length-1],ok=vp&&vp.slice(0,7)===cm;
@@ -308,7 +308,7 @@ function Home(){
  <div class="card big"><b class="ct">Snelle notitie</b><textarea id="qn" rows="3" placeholder="Schrijf hier een korte notitie..."></textarea><div class="two"><button class="btn g" data-a="qs">Notitie opslaan</button><button class="btn g" data-a="pcam">📷 Foto</button><button class="btn g" data-go="notes">Notities</button></div></div>
  ${sec("Acties")}${sparCard()}`;
 }
-function Roster(){return `<h2>Wie werkt er</h2>`+planning()}
+function Roster(){return `<h2>Wie werkt er</h2>`+planning(true)}
 function Info(){return `<h2>Managerinformatie</h2>`+brief()}
 function askName(){form("Jouw naam",[["n","Naam"]],{n:nm()},o=>{try{localStorage.setItem("egname",o.n)}catch(e){}render()})}
 function theme(){const r=document.documentElement,dk=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0b1218";r.dataset.theme=dk?"light":"dark";try{localStorage.setItem("egtheme",r.dataset.theme)}catch(e){}}
@@ -805,7 +805,7 @@ function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j
 function matchEmp(name){
  const n=nrm(name),E=S.emp.map(x=>[x,nrm(x)]);
  let h=E.find(e=>e[1]===n);if(h)return h[0];
- h=E.filter(e=>lev(e[1],n)<=1);if(h.length===1)return h[0][0];
+ h=E.filter(e=>Math.min(e[1].length,n.length)>=6&&lev(e[1],n)<=1);if(h.length===1)return h[0][0];
  const f=n.split(" ")[0];h=E.filter(e=>e[1].split(" ")[0]===f&&(n.split(" ").length===1||e[1].split(" ").length===1));if(h.length===1)return h[0][0];
  return null;
 }
@@ -852,7 +852,7 @@ function impDo(an){
  const R={},av={};let nl=0,nNew=0;
  for(let d=1;d<=Math.min(an.days,dim);d++)R[d]={};
  an.rows.forEach(r=>{let n=nmap[r.name];if(n==="@skip")return;
-  if(n==="@new"){const ex=matchEmp(r.name);if(ex)n=ex;else{n=r.name;if(!S.emp.includes(n)){S.emp.push(n);nNew++}}}
+  if(n==="@new"){const nn=nrm(r.name),ex=S.emp.find(x=>nrm(x)===nn);if(ex)n=ex;else{n=r.name;if(!S.emp.includes(n)){S.emp.push(n);nNew++}}}
   for(const d in r.codes){if(+d>dim)continue;const t=cmap[r.codes[d]]||"-";
    if(t.startsWith("S:")){const s=t.slice(2);(R[d][s]=R[d][s]||[]).push(n);nl++}
    else if(t.startsWith("A:")){(av[n+"|"+t.slice(2)]=av[n+"|"+t.slice(2)]||[]).push(+d)}}});
