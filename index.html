@@ -140,6 +140,10 @@ header .si{display:block}
 .sbtn{padding:10px;border-radius:14px;font-size:14px;margin:10px 0}.add.rnd{width:34px;height:34px;font-size:22px}
 h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 #st{font-size:10px;opacity:.7}.tst{padding:3px 9px;font-size:10px}
+.wv{transform-origin:70% 75%;animation:wave 2.2s ease-in-out 1.2s 2}
+@keyframes wave{0%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-10deg)}30%{transform:rotate(16deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(12deg)}62%,100%{transform:rotate(0)}}
+.fw{text-align:center;color:var(--mu);font-size:14px;margin:-8px 0 12px}
+@media (prefers-reduced-motion:reduce){.wv{animation:none}}
 </style>
 </head>
 <body>
@@ -281,10 +285,12 @@ function sparCard(){
  <div style="margin-top:10px">${it.slice(0,2).map(x=>`<div class="row sp"><span>${esc(x.n)}</span><span>€ ${pr(x.p)}</span></div>`).join("")||'<div class="mu">Tik om producten en datums toe te voegen.</div>'}</div>
  ${it.length>2?`<div class="mu" style="margin:4px">+ ${it.length-2} meer</div>`:""}${foot}</div>`;
 }
+let waveDone=false;
 function Home(){
  const n=new Date(),sec=t=>`<div class="sec">${t}</div>`,cm=mon(),hi=S.todo.filter(x=>!x.x&&x.p==="Hoog");
  const tl=(k,l,c)=>`<button class="tile" data-go="${k[0]}">${c!==""?`<span class="bd">${c}</span>`:""}${ic(k[1])}<b>${l}</b></button>`;
- return `<h1>${greet()}${nm()?" "+esc(nm()):""} 👋</h1><div class="datebox">📅 ${n.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} &nbsp;|&nbsp; Week ${wk(n)}</div>
+ const wv=!waveDone;if(wv)setTimeout(()=>{waveDone=true},6500);
+ return `<h1>${greet()}${nm()?" "+esc(nm()):""} <span class="${wv?"wv":""}" style="display:inline-block">👋</span></h1><div class="fw">Fijne werkdag</div><div class="datebox">📅 ${n.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} &nbsp;|&nbsp; Week ${wk(n)}</div>
  ${bkBanner()}${sec("Vandaag")}${planning()}${brief()}
  ${sec("Management")}<div class="grid">${tl(["roster","p"],"Wie werkt er",rows(iso(n)).length)}${tl(["logs","l"],"Logboek","")}${tl(["todo","t"],"To Do",S.todo.filter(x=>!x.x).length)}${tl(["counts","c"],"Tellingen",S.counts.reduce((a,g)=>a+vis(g,cm).filter(i=>!(i.done||{})[cm]).length,0))}</div>
  ${sec("Aandacht")}<div class="card big"><b class="ct">Extra aandacht</b>${hi.map(x=>`<div class="mu" data-edit="todo:${x.id}" style="cursor:pointer;font-size:13px">• ${esc(x.t)}</div>`).join("")||'<div class="mu">Geen urgente taken.</div>'}</div>
