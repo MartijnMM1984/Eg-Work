@@ -151,6 +151,9 @@ h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 .cam{background:var(--green);color:#fff;border:0;border-radius:50%;width:34px;height:34px;font-size:17px;cursor:pointer;flex:none}
 .pbtn{display:block;position:relative;text-align:center;padding:13px;border-radius:14px;margin:9px 0;overflow:hidden;font-size:15px}.pbtn input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;font-size:0}
 .rh{display:flex;gap:8px;align-items:center}
+
+.imr{display:flex;align-items:center;gap:8px;border:2px solid var(--ln);border-radius:12px;padding:5px 8px;margin:5px 0;font-size:13px}.imr span{flex:1;min-width:0}.imr select{width:auto;max-width:48%;padding:5px;font-size:12px;border-radius:8px}
+.imc{font-size:11px;color:var(--mu)}.imt{display:flex;gap:8px;align-items:center;margin:6px 0}.imt select,.imt input{width:auto;padding:7px}
 </style>
 </head>
 <body>
@@ -162,7 +165,7 @@ h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 <script>
 (function(){try{if(/Android/i.test(navigator.userAgent)&&matchMedia("(display-mode: standalone)").matches){var e=document.getElementById("splash");if(e)e.remove()}}catch(x){}})();
 const SH=["Vroeg","Laat","Nacht","Bakery 1","Bakery 2","Tussendienst"];
-const DEF={emp:[],photos:[],av:[],lb:0,lbz:"",po:[],ag:{},einit:true,st:{n:"Esso Neerduist",a:"rijksweg a1 nr 3",p:"3821 CH Amersfoort"},mp:{},s3init:false,s2init:false,sinit:false,tinit:false,ot:[],oinit:false,cinit:false,rep:{},sp:{t:"SPAR Actie",d:"",e:"",items:[]},vp:[],roster:{},abs:{},todo:[],logs:[],counts:[],visits:[],office:[],notes:[],spar:[],info:""};
+const DEF={emp:[],imap:{},photos:[],av:[],lb:0,lbz:"",po:[],ag:{},einit:true,st:{n:"Esso Neerduist",a:"rijksweg a1 nr 3",p:"3821 CH Amersfoort"},mp:{},s3init:false,s2init:false,sinit:false,tinit:false,ot:[],oinit:false,cinit:false,rep:{},sp:{t:"SPAR Actie",d:"",e:"",items:[]},vp:[],roster:{},abs:{},todo:[],logs:[],counts:[],visits:[],office:[],notes:[],spar:[],info:""};
 const REP=["Niet herhalen","Elke maandag","Elke dinsdag","Elke woensdag","Elke donderdag","Elke vrijdag","Elke zaterdag","Elke zondag"];
 const LISTS={
  todo:{t:"To Do",f:[["t","Titel"],["b","Omschrijving","area"],["p","Prioriteit","select",["Hoog","Normaal","Laag"]],["r","Herhalen","select",REP],["u","Onderwerp"]]},
@@ -277,7 +280,8 @@ function planning(){
  <h3>${day===iso(new Date())?"Vandaag · ":""}${d.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"})}</h3>
  ${R.map(r=>`<div class="pr" data-a="row:${day}|${r.s}|${esc(r.n)}"><div><b>${esc(r.n)}</b>${S.ag[r.n]?`<span class="agb ${S.ag[r.n]}">${S.ag[r.n]}</span>`:""}${r.a?` <span class="ab ${r.a}">· ${r.a.toUpperCase()}</span>`:""}${r.r?`<div class="mu">Vervanger: ${esc(r.r)}</div>`:""}</div><span class="sh">${r.s.toUpperCase()} · ${SHT[r.s]}</span></div>`).join("")||'<div class="mu" style="padding:12px 0">Niemand ingepland.</div>'}
  <button class="btn g" style="margin-top:12px;width:100%" data-a="padd">+ Medewerker inplannen</button>
- <button class="btn g" style="margin-top:8px;width:100%" data-a="pcopy">⧉ Planning kopiëren…</button></div>`;
+ <button class="btn g" style="margin-top:8px;width:100%" data-a="pcopy">⧉ Planning kopiëren…</button>
+ <button class="btn g" style="margin-top:8px;width:100%" data-a="pimp">📥 Rooster importeren (Excel)</button></div>`;
 }
 function brief(){
  const n=iso(new Date()),R=rows(n),cm=mon(),hi=S.todo.filter(x=>!x.x&&x.p==="Hoog"),vp=S.vp[S.vp.length-1],ok=vp&&vp.slice(0,7)===cm;
@@ -324,7 +328,7 @@ document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;const[a,...r]=t.dataset.a.split(":"),v=r.join(":");
  if(a==="day"){day=v;render()}
  else if(a==="wk"){const x=fromIso(day);x.setDate(x.getDate()+ +v);day=iso(x);render()}
- else if(a==="menu")pick("Menu",[["Medewerkers beheren",()=>{tab="team";view=null;render()}],["Tellingen instellen",()=>{view="tcfg";render()}],["Mijn naam wijzigen",askName],["Donker / licht",theme],["Info station",()=>{view="stn";render()}],["Back-up maken",backupMenu],["Back-up terugzetten",restorePick],["App-info",aboutApp],["Alles wissen en opnieuw beginnen",()=>ask("Alle gegevens wissen en opnieuw beginnen?",()=>{idbClear();thumbs={};S=JSON.parse(JSON.stringify(DEF));merge({});day=iso(new Date());tab="home";view=null;save();render()}),"r"]]);
+ else if(a==="menu")pick("Menu",[["Medewerkers beheren",()=>{tab="team";view=null;render()}],["Tellingen instellen",()=>{view="tcfg";render()}],["Mijn naam wijzigen",askName],["Donker / licht",theme],["Info station",()=>{view="stn";render()}],["Rooster importeren (Excel)",impDlg],["Back-up maken",backupMenu],["Back-up terugzetten",restorePick],["App-info",aboutApp],["Alles wissen en opnieuw beginnen",()=>ask("Alle gegevens wissen en opnieuw beginnen?",()=>{idbClear();thumbs={};S=JSON.parse(JSON.stringify(DEF));merge({});day=iso(new Date());tab="home";view=null;save();render()}),"r"]]);
  else if(a==="padd"){if(!S.emp.length){msg("Voeg eerst medewerkers toe via het menu (Medewerkers beheren).");return}
   form("Medewerker inplannen",[["n","Medewerker","emp"],["s","Dienst","select",SH]],{s:"Vroeg"},o=>{ensure(day,o.s);if(!S.roster[day][o.s].includes(o.n))S.roster[day][o.s].push(o.n);save();render()})}
  else if(a==="row"){const[d,s,...q]=v.split("|"),n=q.join("|");S.abs[d]=S.abs[d]||{};S.rep[d]=S.rep[d]||{};
@@ -684,6 +688,7 @@ document.addEventListener("click",e=>{
  if(t.dataset.av!==undefined){avForm(+t.dataset.av);return}
  const a=t.dataset.a;
  if(a==="pcopy")pcopy();
+ else if(a==="pimp")impDlg();
  else if(a==="bkn")backupMenu();
  else if(a==="bkl"){S.lbz=iso(new Date());save();render()}
 });
@@ -738,6 +743,128 @@ document.addEventListener("click",e=>{
  if(a==="pcam")photoPick();
  else if(a==="pview")photoView(v);
 });
+
+/* ---------- rooster importeren (Excel) ---------- */
+const MND=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"],MNE=["january","february","march","april","may","june","july","august","september","october","november","december"];
+const monIdx=t=>{t=String(t||"").toLowerCase();for(let i=0;i<12;i++){if(t.includes(MND[i])||t.includes(MNE[i]))return i+1}return 0};
+const colN=r=>{let n=0;for(const ch of r.replace(/[0-9]/g,""))n=n*26+ch.charCodeAt(0)-64;return n};
+const rowNo=r=>+r.replace(/[A-Za-z]/g,"");
+async function unzip(buf){
+ const u=new Uint8Array(buf),dv=new DataView(buf);let e=-1;
+ for(let i=u.length-22;i>=Math.max(0,u.length-70000);i--){if(dv.getUint32(i,true)===0x06054b50){e=i;break}}
+ if(e<0)throw new Error("geen xlsx");
+ const n=dv.getUint16(e+10,true);let p=dv.getUint32(e+16,true);const out={};
+ for(let k=0;k<n;k++){if(dv.getUint32(p,true)!==0x02014b50)break;
+  const meth=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true);
+  out[new TextDecoder().decode(u.subarray(p+46,p+46+nl))]={meth,cs,lo};p+=46+nl+el+cl}
+ return async name=>{const f=out[name];if(!f)return null;const ln=dv.getUint16(f.lo+26,true),le=dv.getUint16(f.lo+28,true),st=f.lo+30+ln+le,d=u.subarray(st,st+f.cs);
+  if(f.meth===0)return new TextDecoder().decode(d);
+  if(typeof DecompressionStream==="undefined")throw new Error("Deze browser kan het bestand niet uitpakken");
+  return new TextDecoder().decode(await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer())};
+}
+const XM=t=>new DOMParser().parseFromString(t,"application/xml"),qa=(n,t)=>[...n.getElementsByTagNameNS("*",t)];
+async function readXlsx(file){
+ const get=await unzip(await file.arrayBuffer()),wbt=await get("xl/workbook.xml");if(!wbt)throw new Error("geen xlsx");
+ const wb=XM(wbt),rels=XM(await get("xl/_rels/workbook.xml.rels")),rm={};qa(rels,"Relationship").forEach(r=>rm[r.getAttribute("Id")]=r.getAttribute("Target"));
+ const sst=await get("xl/sharedStrings.xml"),ss=sst?qa(XM(sst),"si").map(si=>qa(si,"t").map(t=>t.textContent).join("")):[];
+ const sheets=[];
+ for(const sh of qa(wb,"sheet")){if(sh.getAttribute("state")==="hidden")continue;
+  const rid=sh.getAttribute("r:id")||sh.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships","id"),tg=rm[rid];if(!tg)continue;
+  const xt=await get(tg.startsWith("/")?tg.slice(1):"xl/"+tg);if(!xt)continue;
+  const g={};qa(XM(xt),"c").forEach(c=>{const ref=c.getAttribute("r"),t=c.getAttribute("t"),vv=qa(c,"v")[0];let v;
+   if(t==="s")v=vv?ss[+vv.textContent]:undefined;else if(t==="inlineStr")v=qa(c,"t").map(x=>x.textContent).join("");else if(vv){v=vv.textContent;if(t!=="str"&&t!=="b"&&v!==""&&isFinite(+v))v=+v}
+   if(v===undefined||v==="")return;const r=rowNo(ref);(g[r]=g[r]||{})[colN(ref)]=v});
+  sheets.push({name:sh.getAttribute("name"),g})}
+ if(!sheets.length)throw new Error("Geen werkblad gevonden");
+ return sheets;
+}
+function analyze(sh){
+ const g=sh.g,rs=Object.keys(g).map(Number).sort((a,b)=>a-b);let best=null;
+ for(const r of rs){const row=g[r];for(const c of Object.keys(row).map(Number)){if(row[c]===1){let n=1;while(row[c+n]===n+1)n++;if(n>=20&&(!best||n>best.n))best={r,c,n}}}}
+ if(!best)return null;
+ const hr=best.r,fc=best.c,dayCols={};for(let i=0;i<Math.min(best.n,31);i++)dayCols[i+1]=fc+i;
+ const cnt={};rs.filter(r=>r>hr).forEach(r=>{for(const c of Object.keys(g[r]).map(Number)){if(c<fc&&typeof g[r][c]==="string"&&!/^(temp|zzp)$/i.test(g[r][c]))cnt[c]=(cnt[c]||0)+1}});
+ const nc=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];if(!nc)return null;
+ const rows=[];let open=0;
+ for(const r of rs.filter(r=>r>hr)){const nm=g[r][nc];if(typeof nm!=="string")continue;const name=nm.trim();if(/bezetting|totaal|total/i.test(name))break;if(!name)continue;
+  const codes={};let n=0;for(const d in dayCols){const v=g[r][dayCols[d]];if(typeof v==="string"&&v.trim()){codes[d]=v.trim().toUpperCase();n++}}
+  if(!n)continue;if(/^(open|vacature)$/i.test(name)){open+=n;continue}
+  const ct=Object.keys(g[r]).map(Number).filter(c=>c<fc&&c!==nc).map(c=>g[r][c]).find(v=>typeof v==="string");
+  rows.push({name,codes,temp:/temp|zzp/i.test(ct||"")})}
+ let year=0,month=0;
+ for(const r of rs.filter(r=>r<=hr)){for(const c of Object.keys(g[r]).map(Number)){const v=g[r][c];if(typeof v!=="string")continue;
+  const nx=[1,2,3].map(k=>g[r][c+k]).find(x=>x!==undefined);
+  if(/^(year|jaar)$/i.test(v.trim())&&nx>1900)year=+nx;
+  else if(/^(month|maand)$/i.test(v.trim())&&nx!==undefined)month=typeof nx==="number"?nx:monIdx(nx);
+  else{const m=monIdx(v),y=(v.match(/20\d\d/)||[])[0];if(m&&!month&&v.length<90)month=m;if(y&&!year&&v.length<90)year=+y}}}
+ if(!month)month=monIdx(sh.name);if(!year){const y=(sh.name.match(/20\d\d/)||[])[0];year=y?+y:0}
+ return{rows,open,days:Object.keys(dayCols).length,year,month};
+}
+const nrm=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/(.)\1/g,"$1").replace(/\s+/g," ").trim();
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return m[a.length][b.length]}
+function matchEmp(name){
+ const n=nrm(name),E=S.emp.map(x=>[x,nrm(x)]);
+ let h=E.find(e=>e[1]===n);if(h)return h[0];
+ h=E.filter(e=>lev(e[1],n)<=1);if(h.length===1)return h[0][0];
+ const f=n.split(" ")[0];h=E.filter(e=>e[1].split(" ")[0]===f&&(n.split(" ").length===1||e[1].split(" ").length===1));if(h.length===1)return h[0][0];
+ return null;
+}
+const DEFMAP={V:"S:Vroeg",L:"S:Laat",N:"S:Nacht",T:"S:Tussendienst",B:"S:Bakery 1",B1:"S:Bakery 1",B2:"S:Bakery 2",K:"-",X:"-",BHV:"-",VS:"-",LS:"-",TS:"-"};
+const cmOpts=()=>[...SH.map(x=>["S:"+x,x]),["-","Overslaan"],["A:Verlof","Afwezig: verlof"],["A:Vakantie","Afwezig: vakantie"],["A:Ziek","Afwezig: ziek"]];
+function impDlg(){
+ openM(`<h2 style="text-align:center">Rooster importeren</h2><div class="mu" style="margin-bottom:6px">Kies het Excel-bestand (.xlsx) met het rooster. Het wordt alleen op je telefoon gelezen.</div>
+ <label class="btn pbtn">📥 Excel-bestand kiezen<input type="file" id="imf"></label><button class="btn g" id="imx" style="width:100%;margin-top:6px">Annuleren</button>`);
+ $("#imx").onclick=closeM;
+ $("#imf").onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;
+  try{const sheets=await readXlsx(f),ok=sheets.map((sh,i)=>[i,analyze(sh)]).filter(x=>x[1]);
+   if(!ok.length){msg("Ik kan in dit bestand geen rooster vinden (rij met dagen 1 t/m 28-31 en namen ernaast).");return}
+   impPrev({f,sheets,si:ok[0][0]})}
+  catch(err){msg("Dit bestand kan ik niet lezen"+(err&&err.message?" ("+err.message+")":"")+". Is het een .xlsx-bestand?")}};
+}
+function impPrev(st){
+ const sh=st.sheets[st.si],an=analyze(sh);if(!an){msg("In dit werkblad vind ik geen rooster.");return}
+ const now=new Date(),y0=an.year||now.getFullYear(),m0=an.month||now.getMonth()+1;
+ const nm=an.rows.map(r=>[r.name,matchEmp(r.name),r]);
+ const cc={};an.rows.forEach(r=>Object.values(r.codes).forEach(c=>cc[c]=(cc[c]||0)+1));
+ const cm=Object.assign({},DEFMAP,S.imap||{}),co=cmOpts(),tot=Object.values(cc).reduce((a,b)=>a+b,0);
+ openM(`<h2 style="text-align:center">Rooster importeren</h2>
+ ${st.sheets.length>1?`<div class="imt"><span>Werkblad</span><select id="imS">${st.sheets.map((x,i)=>analyze(x)?`<option value="${i}" ${i===st.si?"selected":""}>${esc(x.name)}</option>`:"").join("")}</select></div>`:""}
+ <div class="imt"><span>Maand</span><select id="imM">${MND.map((x,i)=>`<option value="${i+1}" ${i+1===m0?"selected":""}>${x}</option>`).join("")}</select><input type="number" id="imY" value="${y0}" style="width:80px"></div>
+ <div class="mu">${an.rows.length} medewerkers · ${tot} regels · ${an.days} dagen${an.open?` · ${an.open} open diensten (OPEN-rij) worden niet ingepland`:""}</div>
+ <div class="sec" style="margin-top:12px">Letters</div>
+ ${Object.keys(cc).sort().map(c=>`<div class="imr"><span><b>${esc(c)}</b> <span class="imc">${cc[c]}×</span></span><select data-cm="${esc(c)}">${co.map(o=>`<option value="${o[0]}" ${cm[c]===o[0]||(!cm[c]&&o[0]==="-")?"selected":""}>${o[1]}</option>`).join("")}</select></div>`).join("")}
+ <div class="sec" style="margin-top:12px">Namen</div>
+ ${nm.map(([n,m,r])=>`<div class="imr"><span>${esc(n)} <span class="imc">${Object.keys(r.codes).length}×${r.temp?" · TEMP":""}</span></span><select data-nm="${esc(n)}"><option value="@new" ${m?"":"selected"}>Nieuwe medewerker</option>${S.emp.map(x=>`<option ${x===m?"selected":""}>${esc(x)}</option>`).join("")}<option value="@skip">Overslaan</option></select></div>`).join("")}
+ <div class="sec" style="margin-top:12px">Dagen die al gevuld zijn</div>
+ <label style="display:flex;gap:8px;align-items:center;color:var(--tx);font-size:14px"><input type="radio" name="imode" value="skip" checked> Overslaan</label>
+ <label style="display:flex;gap:8px;align-items:center;color:var(--tx);font-size:14px"><input type="radio" name="imode" value="replace"> Vervangen door het rooster uit het bestand</label>
+ <div class="two" style="margin-top:14px"><button class="btn g" id="imc">Annuleren</button><button class="btn" id="imi">Importeren</button></div>`);
+ if($("#imS"))$("#imS").onchange=e=>{st.si=+e.target.value;impPrev(st)};
+ $("#imc").onclick=closeM;
+ $("#imi").onclick=()=>impDo(an);
+}
+function impDo(an){
+ const m=+$("#imM").value,y=+$("#imY").value;if(!(y>2000&&y<2100)){msg("Vul een geldig jaar in.");return}
+ const cmap={},nmap={},mode=document.querySelector('input[name="imode"]:checked').value;
+ document.querySelectorAll("#sheet [data-cm]").forEach(e=>cmap[e.dataset.cm]=e.value);
+ document.querySelectorAll("#sheet [data-nm]").forEach(e=>nmap[e.dataset.nm]=e.value);
+ const dim=new Date(y,m,0).getDate(),dt=d=>y+"-"+String(m).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+ const R={},av={};let nl=0,nNew=0;
+ for(let d=1;d<=Math.min(an.days,dim);d++)R[d]={};
+ an.rows.forEach(r=>{let n=nmap[r.name];if(n==="@skip")return;
+  if(n==="@new"){const ex=matchEmp(r.name);if(ex)n=ex;else{n=r.name;if(!S.emp.includes(n)){S.emp.push(n);nNew++}}}
+  for(const d in r.codes){if(+d>dim)continue;const t=cmap[r.codes[d]]||"-";
+   if(t.startsWith("S:")){const s=t.slice(2);(R[d][s]=R[d][s]||[]).push(n);nl++}
+   else if(t.startsWith("A:")){(av[n+"|"+t.slice(2)]=av[n+"|"+t.slice(2)]||[]).push(+d)}}});
+ let days=0,skipped=0;
+ for(const d in R){const k=dt(d);if(mode==="skip"&&hasR(k)){skipped++;continue}S.roster[k]=R[d];days++}
+ let na=0;
+ for(const key in av){const[n,t]=key.split("|"),L=av[key].sort((a,b)=>a-b);let s=L[0],p=s;
+  const push=(a,b)=>{const sa=dt(a),sb=dt(b);if(!S.av.some(x=>x.n===n&&x.t===t&&x.s===sa&&x.e===sb)){S.av.push({id:uid(),n,t,s:sa,e:sb});na++}};
+  for(let i=1;i<=L.length;i++){if(L[i]===p+1){p=L[i];continue}push(s,p);s=L[i];p=L[i]}}
+ S.imap=Object.assign(S.imap||{},cmap);day=dt(1);save();closeM();render();
+ setTimeout(()=>msg(`Rooster geïmporteerd: ${nl} diensten op ${days} dagen`+(skipped?`, ${skipped} dagen overgeslagen omdat daar al een planning stond`:"")+(nNew?`, ${nNew} nieuwe medewerkers toegevoegd`:"")+(na?`, ${na} afwezigheidsperiodes`:"")+"."),300);
+}
 
 /* ---------- SPAR scherm + push orders ---------- */
 const pr2=x=>{const v=parseFloat(x);return isNaN(v)?esc(x):v.toFixed(2)};
