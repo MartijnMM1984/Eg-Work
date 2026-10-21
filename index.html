@@ -160,7 +160,7 @@ h2{font-size:18px;margin:4px 0}.pc{border-radius:14px;padding:10px 12px}
 @keyframes vR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
 @keyframes vL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
 @keyframes vF{from{opacity:0}to{opacity:1}}
-#app.sRight{animation:vR .24s ease-out}#app.sLeft{animation:vL .24s ease-out}#app.sFade{animation:vF .2s ease-out}
+#app.sRight>:not(.fab){animation:vR .24s ease-out}#app.sLeft>:not(.fab){animation:vL .24s ease-out}#app.sFade>:not(.fab){animation:vF .2s ease-out}#app.sRight>.fab,#app.sLeft>.fab,#app.sFade>.fab{animation:vF .24s ease-out}
 @keyframes fillb{from{width:0}}.fresh .bar i{animation:fillb .8s cubic-bezier(.2,.8,.2,1)}
 @keyframes pop{0%{transform:scale(.6)}55%{transform:scale(1.4)}100%{transform:scale(1)}}@keyframes dn{from{opacity:1}}
 input.pop{animation:pop .32s ease-out}.cb.pop{animation:popb .35s ease-out}@keyframes popb{0%{transform:scale(.92)}55%{transform:scale(1.06)}100%{transform:scale(1)}}.pb i.pop{animation:fillb .7s cubic-bezier(.2,.8,.2,1)}input.pop+.done{animation:dn .5s ease-out}
@@ -169,7 +169,7 @@ input.pop{animation:pop .32s ease-out}.cb.pop{animation:popb .35s ease-out}@keyf
 .tile,.spc,.mc,.poc,.vc,.tcard,.pr,.btn,.sbtn,.mt,.ph2,.card[data-a],.sb{transition:transform .12s ease}
 .tile:active,.spc:active,.mc:active,.poc:active,.vc:active,.tcard:active,.pr:active,.btn:active,.sbtn:active,.mt:active,.ph2:active,.card[data-a]:active{transform:scale(.97)}.sb:active{transform:scale(.93)}
 .chv{display:inline-block;font-size:18px;line-height:1;transition:transform .2s}.chv.up{transform:rotate(180deg)}
-@media (prefers-reduced-motion:reduce){#app.sRight,#app.sLeft,#app.sFade,.fresh .bar i,.pb i.pop,.cb.pop,#modal.on,#modal.on #sheet,input.pop,input.pop+.done{animation:none}.tile:active,.spc:active,.mc:active,.poc:active,.vc:active,.tcard:active,.pr:active,.btn:active,.sbtn:active,.mt:active,.ph2:active,.card[data-a]:active,.sb:active{transform:none}}
+@media (prefers-reduced-motion:reduce){#app.sRight>*,#app.sLeft>*,#app.sFade>*,.fresh .bar i,.pb i.pop,.cb.pop,#modal.on,#modal.on #sheet,input.pop,input.pop+.done{animation:none}.tile:active,.spc:active,.mc:active,.poc:active,.vc:active,.tcard:active,.pr:active,.btn:active,.sbtn:active,.mt:active,.ph2:active,.card[data-a]:active,.sb:active{transform:none}}
 
 /* uitrol-menu */
 #modal.dd{background:#0003;align-items:flex-start;justify-content:flex-start}
@@ -178,11 +178,14 @@ input.pop{animation:pop .32s ease-out}.cb.pop{animation:popb .35s ease-out}@keyf
 @keyframes ddOpen{from{clip-path:inset(0 0 100% 0 round 16px);opacity:.5;transform:translateY(-10px)}to{clip-path:inset(0 0 0 0 round 16px);opacity:1;transform:none}}
 .ddt{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);padding:8px 2px 4px}
 .ddr{display:block;width:100%;background:none;border:0;border-bottom:1px solid var(--ln);padding:12px 2px;font:inherit;font-size:15px;color:var(--tx);text-align:left;cursor:pointer;animation:ddI .32s ease-out both;animation-delay:calc(var(--i)*32ms + 70ms)}
+.ddr{display:flex;align-items:center;gap:12px}.ddi{flex:none;width:32px;height:32px;border-radius:50%;background:#61af2320;color:var(--green,#61af23);display:flex;align-items:center;justify-content:center}
+.pt3{display:flex;justify-content:flex-start;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--ln)}.pt3 button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--tx);cursor:pointer;padding:0;font:inherit}.pt3 .ddi{width:36px;height:36px}.pt3 .ddi svg{width:18px;height:18px}.pen.gfnb{padding:6px;margin-left:2px}.pics{display:flex;justify-content:center;gap:16px;margin:12px 0 4px}.pic{position:relative;overflow:hidden;width:48px;height:48px;border-radius:50%;background:#61af2320;color:var(--green,#61af23);display:flex;align-items:center;justify-content:center;cursor:pointer}.pic:active{transform:scale(.93)}.pic input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;font-size:0}.pt3 .ddi{position:relative}.bdg{position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--green,#61af23);color:#fff;font-size:11px;font-weight:700;line-height:11px;text-align:center;border:1.5px solid var(--card,#fff);box-sizing:content-box}.pt3 i{font-style:normal;font-size:11px;color:var(--mu)}.pt3 .rd .ddi{background:#e5484d1f;color:#e5484d}.pt3 button:active .ddi{transform:scale(.92)}
 .ddr:last-child{border-bottom:0}.ddr:active{background:#8dc01022}.ddr.r{color:#e5484d}
 @keyframes ddI{from{opacity:0;transform:translateY(-8px)}}
 @keyframes hbx{from{transform:rotate(-90deg);opacity:.2}}header button.hbx{animation:hbx .25s ease-out}
 @media (prefers-reduced-motion:reduce){#modal.dd.on #sheet,.ddr,header button.hbx{animation:none}}
 
+.pen{border:0;background:none;color:var(--mu,#667);padding:6px;border-radius:50%;cursor:pointer;display:flex}.pen.padd{color:var(--green,#61af23);background:#61af2320;padding:8px}.pen:active{background:#0001}
 /* paginadraai + documenten */
 .flip{position:relative;perspective:1500px;overflow:hidden}
 .fp{position:absolute;inset:0;background:#fff;transform-origin:left center;backface-visibility:hidden;overflow:hidden}
@@ -208,6 +211,9 @@ input.pop{animation:pop .32s ease-out}.cb.pop{animation:popb .35s ease-out}@keyf
 .pvh .fp{background:transparent}
 .pvs{position:absolute;inset:0;overflow:auto;display:flex;padding:8px}.pvs canvas{margin:auto;background:#fff;box-shadow:0 4px 18px #0008;flex:none}
 @media (prefers-reduced-motion:reduce){.fp.fOut,.fp.fIn,.fp.fUnder{animation:none}}
+@keyframes bfIn{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}@keyframes chU{from{transform:rotate(0)}}@keyframes chD{from{transform:rotate(180deg)}}
+.bfo>:not(:first-child){animation:bfIn .34s cubic-bezier(.2,.8,.2,1)}.bfc>.bl{animation:bfIn .3s ease-out}.bfo .chv.up{animation:chU .3s ease-out}.bfc .chv{animation:chD .3s ease-out}
+@media (prefers-reduced-motion:reduce){.bfo>*,.bfc>.bl,.bfo .chv,.bfc .chv{animation:none!important}}
 </style>
 </head>
 <body>
@@ -271,7 +277,7 @@ async function init(){
 }
 
 /* ---------- modal ---------- */
-function openM(h){$("#sheet").innerHTML=h;const mm=$("#modal");mm.classList.remove("dd");mm.style.top="";mm.classList.add("on");if(typeof schedSync==="function")schedSync()}
+function openM(h){$("#sheet").innerHTML=h;$("#sheet").style.marginLeft="";const mm=$("#modal");mm.classList.remove("dd");mm.style.top="";mm.classList.add("on");if(typeof schedSync==="function")schedSync()}
 function closeM(){$("#modal").classList.remove("on");try{const hb=document.querySelector('header [data-a="menu"]');if(hb&&hb.textContent!=="☰")hb.textContent="☰"}catch(e){}if(typeof schedSync==="function")schedSync()}
 $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeM()});
 function form(title,fields,init,cb,del){
@@ -289,8 +295,9 @@ function form(title,fields,init,cb,del){
  if(del)$("#fd").onclick=()=>{ask("Weet je het zeker?",del)};
  $("#fs").onclick=()=>{const o={};document.querySelectorAll("#sheet [data-k]").forEach(e=>o[e.dataset.k]=e.value.trim());if(!(o[fields[0][0]]||"")){return}cb(o);closeM()};
 }
+const DDI={cnt:'<rect x="5" y="4" width="14" height="17" rx="3"/><path d="M9 3h6v3H9zM9 13l2 2 4-4"/>',usr:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/>',bak:'<path d="M4 10l1.5-5h13L20 10M4 10h16M4 10v10h16V10"/><path d="M9 20v-5h6v5"/>',thm:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',stn:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',bkp:'<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/>',inf:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.2"/>'};
 function dropMenu(opts){
- openM(`<div class="ddt">Menu</div>`+opts.map((o,i)=>`<button class="ddr ${o[2]||""}" style="--i:${i}" data-i="${i}">${esc(o[0])}</button>`).join(""));
+ openM(`<div class="ddt">Menu</div>`+opts.map((o,i)=>`<button class="ddr ${o[2]||""}" style="--i:${i}" data-i="${i}">${o[3]?`<span class="ddi"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${DDI[o[3]]||""}</svg></span>`:""}<span>${esc(o[0])}</span></button>`).join(""));
  const m=$("#modal"),h=document.querySelector("header");m.classList.add("dd");m.style.top=(h?Math.round(h.getBoundingClientRect().bottom):56)+"px";
  try{const hb=document.querySelector('header [data-a="menu"]');if(hb){hb.textContent="✕";hb.classList.remove("hbx");void hb.offsetWidth;hb.classList.add("hbx")}}catch(e){}
  document.querySelectorAll("#sheet [data-i]").forEach(b=>b.onclick=()=>{closeM();opts[b.dataset.i][1]()})}
@@ -307,7 +314,7 @@ function rosterBody(d,ro){
   ${l.map(n=>`<span class="chip ${aOf(d,n)||""}" ${ro?"":`data-who="${s}|${esc(n)}"`}>${esc(n)}${agb(n)}${aOf(d,n)?" · "+aOf(d,n):""}</span>`).join("")||'<span class="mu">Niemand</span>'}</div>`}).join("")||'<div class="mu">Niemand ingepland.</div>';
 }
 function Team(){
- return `<div class="row"><h2>Medewerkers</h2><button class="add" data-newemp="1" aria-label="Toevoegen">+</button></div><button class="btn g" style="width:100%;margin:0 0 8px" data-ags="1">Uitzendbureaus beheren</button>${S.emp.map((n,i)=>`<div class="ec"><b>${esc(n)}${agb(n)}${(()=>{const q=avP(n,iso(new Date()));return q?`<div class="mu" style="font-size:11px;font-weight:500">${q.t} t/m ${dl(q.e||q.s)}</div>`:""})()}</b><span class="ecb"><button class="btn g" data-av="${i}">Afwezig</button><button class="btn g" data-emp="${i}">Wijzig</button></span></div>`).join("")||'<div class="mu">Nog geen medewerkers. Tik op + om er een toe te voegen.</div>'}`;
+ return `<div class="row"><h2>Medewerkers</h2><span style="display:flex;align-items:center;gap:8px"><button class="pen padd" data-ags="1" aria-label="Uitzendbureaus beheren" title="Uitzendbureaus beheren"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 13h17"/></svg></button><button class="pen padd" data-newemp="1" aria-label="Medewerker toevoegen" title="Medewerker toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6 1.3 0 2.5.4 3.4 1.1"/><path d="M18 14v6M15 17h6"/></svg></button></span></div><div style="height:8px"></div>${S.emp.map((n,i)=>`<div class="ec"><b>${esc(n)}${agb(n)}${(()=>{const q=avP(n,iso(new Date()));return q?`<div class="mu" style="font-size:11px;font-weight:500">${q.t} t/m ${dl(q.e||q.s)}</div>`:""})()}</b><span class="ecb"><button class="btn g" data-av="${i}">Afwezig</button><button class="btn g" data-emp="${i}">Wijzig</button></span></div>`).join("")||'<div class="mu">Nog geen medewerkers. Tik op + om er een toe te voegen.</div>'}`;
 }
 function Manager(){
  const m=[["visits","◷","Bezoeken & afspraken","Audits, monteurs en andere afspraken"],["office","▤","Takenlijst kantoor","Vaste weektaken van maandag t/m vrijdag"],["counts","□","Tellingen","Tellingen en maandplanning bekijken"],["notes","▱","Notities","Opgeslagen notities openen en beheren"],["roster","▦","Roosters","Werkrooster openen en bekijken"],["info","i","Managerinformatie","De actuele manager briefing bekijken"]];
@@ -320,7 +327,7 @@ function ListV(k){
 }
 
 const SPARLOGO="data:image/png;base64,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";
-const APPV="1.31",APPD="20 oktober 2026";
+const APPV="1.63",APPD="20 oktober 2026";
 const SHT={Vroeg:"05:30–13:30","Bakery 1":"05:30–13:30",Laat:"13:00–21:00",Nacht:"21:00–06:00","Bakery 2":"09:00–17:00",Tussendienst:"09:00–17:00"};
 const ICO={p:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M15 14.5c3 0 6 1.5 6 5"/>',l:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h3"/>',t:'<rect x="5" y="4" width="14" height="17" rx="3"/><path d="M9 3h6v3H9zM9 13l2 2 4-4"/>',c:'<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h6M9 4v16M13 9h5M13 13h5M13 17h5"/>'};
 const ic=k=>`<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#61af23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICO[k]}</svg>`;
@@ -355,14 +362,14 @@ function planning(tools){
  const d=fromIso(day),mo=new Date(d);mo.setDate(d.getDate()-((d.getDay()+6)%7));
  const ds=[...Array(7)].map((_,i)=>{const x=new Date(mo);x.setDate(mo.getDate()+i);return x}),su=ds[6],AB=["Zo","Ma","Di","Wo","Do","Vr","Za"];
  const R=rows(day);
- return `<div class="card big"><b class="ct">Planning</b><div class="wk">Week ${wk(d)} · ${ds[0].getDate()} – ${su.getDate()} ${su.toLocaleDateString("nl-NL",{month:"long",year:"numeric"})}</div>
+ return `<div class="card big">${tools?'<b class="ct">Planning</b>':`<div style="display:flex;align-items:center;justify-content:space-between"><b class="ct">Planning</b><button class="pen padd" data-a="padd" aria-label="Medewerker inplannen" title="Medewerker inplannen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6 1.3 0 2.5.4 3.4 1.1"/><path d="M18 14v6M15 17h6"/></svg></button></div>`}<div class="wk">Week ${wk(d)} · ${ds[0].getDate()} – ${su.getDate()} ${su.toLocaleDateString("nl-NL",{month:"long",year:"numeric"})}</div>
  <div class="strip">${[-7,0,7].map(o=>`<div class="wkp">${ds.map(x=>{const y=new Date(x);y.setDate(y.getDate()+o);const i=iso(y);return `<button class="sb ${i===day?"on":""}" data-a="day:${i}">${AB[y.getDay()]}<br>${y.getDate()}</button>`}).join("")}</div>`).join("")}</div>
  <h3>${day===iso(new Date())?"Vandaag · ":""}${d.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"})}</h3>
  ${R.map(r=>`<div class="pr" data-a="row:${day}|${r.s}|${esc(r.n)}"><div><b>${esc(r.n)}</b>${agb(r.n)}${r.a?` <span class="ab ${r.a}">· ${r.a.toUpperCase()}</span>`:""}${r.r?`<div class="mu">Vervanger: ${esc(r.r)}</div>`:""}</div><span class="sh">${r.s.toUpperCase()} · ${SHT[r.s]}</span></div>`).join("")||'<div class="mu" style="padding:12px 0">Niemand ingepland.</div>'}
- <button class="btn g" style="margin-top:12px;width:100%" data-a="padd">+ Medewerker inplannen</button>
- ${tools?`<button class="btn g" style="margin-top:8px;width:100%" data-a="pcopy">⧉ Planning kopiëren…</button>
- <button class="btn g" style="margin-top:8px;width:100%" data-a="pimp">📥 Rooster importeren (Excel)</button>
- <button class="btn g" style="margin-top:8px;width:100%;color:#c0392b" data-a="pdel">🗑 Dag of week verwijderen…</button>`:""}</div>`;
+ ${tools?`<div class="pt3"><button data-a="padd" aria-label="Medewerker inplannen" title="Medewerker inplannen"><span class="ddi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6 1.3 0 2.5.4 3.4 1.1"/><path d="M18 14v6M15 17h6"/></svg></span></button>
+ <button data-a="pcopy" aria-label="Planning kopiëren"><span class="ddi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/></svg></span></button>
+ <button data-a="pimp" aria-label="Rooster importeren (Excel)"><span class="ddi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><mask id="xlm"><rect width="24" height="24" fill="#fff"/><path d="M3.5 7.5h8l4.5 4.5v9.5h-12.5z" fill="#000" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/></mask><path d="M18 2.5v8M14 6.5h8" mask="url(#xlm)"/><path d="M3.5 7.5h8l4.5 4.5v9.5h-12.5z"/><path d="M11.5 7.5V12H16"/><path d="M6.8 14l5.4 5.5M12.2 14l-5.4 5.5"/></svg></span></button>
+ <button data-a="pdel" aria-label="Dag of week verwijderen" class="rd"><span class="ddi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg></span></button></div>`:""}</div>`;
 }
 const bfOpen=()=>{try{return localStorage.getItem("egbrief")==="1"}catch(e){return false}};
 function brief(col){
@@ -385,16 +392,20 @@ function bkPick(){const c=S.bk||"gofresh",o=[["gofresh","Go Fresh"],["spar","SPA
 function gfCard(){if(!bkOn())return"";const p=B();
  return `<div class="spc gfc" style="border-color:${BI().c}" data-a="gf"><div class="row"><span style="display:flex;align-items:center;gap:10px">${gfL(30)}<b style="font-size:16px">${esc(p.t||BI().d)}</b></span><b>›</b></div>
  ${p.d&&p.e?gfBar(p):'<div class="mu" style="margin-top:8px">Tik om de looptijd van het menu in te stellen.</div>'}</div>`}
+function NotesSec(){const o=B(),ph=(o.photos||[]).slice().sort((a,b)=>(b.d||"").localeCompare(a.d||"")),nt=(o.notes||[]).slice().reverse();
+ const sp=ph.slice(0,3),sn=nt.slice(0,3),miss=sp.filter(q=>thumbs[q.id]===undefined);if(miss.length)ensureTh(miss.map(q=>q.id)).then(()=>{if(view==="gfv")render()});
+ const more=ph.length>3||nt.length>3,tot=ph.length+nt.length;
+ return `<div class="row" style="margin-top:16px"><h2>Notities</h2><span style="display:flex;align-items:center;gap:8px"><button class="pen padd" data-a="gfpc" aria-label="Foto toevoegen" title="Foto toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg></button><button class="pen padd" data-a="gfnew" aria-label="Notitie toevoegen" title="Notitie toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></span></div>`+
+ (tot?(sp.length?`<div class="pg">${sp.map(q=>`<div class="ph2" data-a="gfpv:${q.id}">${thumbs[q.id]?`<img src="${thumbs[q.id]}" alt="">`:""}${q.c?`<div class="cap">${esc(q.c)}</div>`:""}</div>`).join("")}</div>`:"")+
+ sn.map(x=>`<div class="vc" data-a="gfedit:${x.id}"><b style="font-size:14px">${esc(x.t||"Notitie")}</b>${x.c?`<span class="mu" style="font-size:11px;margin-left:8px">${dnl(x.c)}</span>`:""}${x.n&&x.n!==x.t?`<div class="mu" style="margin-top:3px">${esc(x.n.length>90?x.n.slice(0,90)+"…":x.n)}</div>`:""}</div>`).join("")+
+ (more?`<button class="sbtn" data-a="gfn" style="margin-top:8px">Alle notities (${tot}) ›</button>`:""):'<div class="mu" style="margin:8px 2px 16px">Nog geen notities. Tik op het camera-icoon voor een foto of op + om te typen.</div>')}
 function GfV(){const p=B(),it=p.items||[],nn=(p.notes||[]).length+(p.photos||[]).length;
  const miss=it.filter(x=>x.ph&&thumbs[x.ph]===undefined);if(miss.length)ensureTh(miss.map(x=>x.ph)).then(()=>{if(view==="gfv")render()});
- return `<div class="row"><span style="display:flex;align-items:center;gap:10px">${gfL(34)}</span></div><h2 style="margin:10px 0 0">${esc(p.t||BI().d)}</h2>
+ return `<div class="row"><span style="display:flex;align-items:center;gap:10px">${gfL(34)}</span></div><div style="display:flex;align-items:center;gap:8px;margin:10px 0 0"><h2 style="margin:0">${esc(p.t||BI().d)}</h2><button class="pen" data-a="gfm" aria-label="Naam wijzigen"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><button class="pen" data-a="gfr" aria-label="Menu resetten"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></svg></button></div>
  <div class="spc gfc" style="border-color:${BI().c};margin-top:12px" data-a="gfd">${p.d&&p.e?gfBar(p).replace(' style="margin-top:8px"',""):'<div class="mu">Tik om de looptijd van het menu in te stellen.</div>'}</div>
- <div class="row" style="margin-top:16px"><h2>Menu</h2><button class="add" data-a="gfma" aria-label="Product toevoegen">+</button></div>
+ <div class="row" style="margin-top:16px"><h2>Menu</h2><button class="pen padd" data-a="gfma" aria-label="Product toevoegen" title="Product toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
  ${it.length?`<div class="mg">${it.map((x,i)=>`<div class="mt" data-a="gfmv:${i}">${x.ph&&thumbs[x.ph]?`<img src="${thumbs[x.ph]}" alt="">`:`<div class="ph0">🥖</div>`}<div class="tx">${esc(x.n)}${x.p!==""&&x.p!=null?`<div style="color:var(--green);font-weight:700;font-size:13px">€ ${pr2(x.p)}</div>`:""}</div></div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen producten. Tik op + om een broodje met foto toe te voegen.</div>'}
- ${DocsSec()}
- <button class="sbtn" data-a="gfn">📝 Notities${nn?" ("+nn+")":""}</button>
- <button class="sbtn" data-a="gfm">Naam wijzigen</button>
- <button class="sbtn" data-a="gfr">Menu resetten</button>`}
+ ${DocsSec()}${NotesSec()}`}
 function gfItemView(i){const o=B(),x=(o.items||[])[i];if(!x)return;
  openM(`${x.ph?`<img id="gvi" src="${thumbs[x.ph]||""}" alt="" style="width:100%;max-height:68vh;object-fit:contain;border-radius:12px;background:#0003;display:block">`:'<div class="ph0" style="aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:48px;background:var(--bg);border-radius:12px">🥖</div>'}
  <h2 style="margin:10px 0 0">${esc(x.n)}</h2>${x.p!==""&&x.p!=null?`<div style="color:var(--green);font-weight:700;margin-top:2px">€ ${pr2(x.p)}</div>`:""}
@@ -406,8 +417,7 @@ function gfItemForm(i){const o=B();o.items=o.items||[];const x=i>=0?o.items[i]:n
  const draw=()=>{
   openM(`<h2>${x?"Product":"Nieuw product"}</h2>
   ${w.ph?`<div style="position:relative"><img src="${thumbs[w.ph]||""}" alt="" style="width:100%;max-height:240px;object-fit:contain;background:#0003;border-radius:12px;display:block"><button class="btn r" id="mpx" style="position:absolute;top:8px;right:8px;padding:0;width:30px;height:30px;border-radius:99px">×</button></div>`:""}
-  <label class="btn pbtn" style="margin-top:8px">📷 ${w.ph?"Andere foto maken":"Foto maken"}<input type="file" accept="image/*" capture="environment" id="mc1"></label>
-  <label class="btn g pbtn">🖼️ Kies uit galerij<input type="file" accept="image/*" id="mc2"></label>
+  <div class="pics"><label class="pic" title="Foto maken" aria-label="Foto maken"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg><input type="file" accept="image/*" capture="environment" id="mc1"></label><label class="pic" title="Kies uit galerij" aria-label="Kies uit galerij"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4.5 3.5"/></svg><input type="file" accept="image/*" id="mc2"></label></div>
   <label>Naam</label><input type="text" id="mn" placeholder="Bijvoorbeeld: Croissant kaas" value="${esc(w.n)}"><label>Prijs (optioneel)</label><input type="text" id="mp" inputmode="decimal" placeholder="2.50" value="${esc(w.p)}">
   <div class="row" style="margin-top:16px">${x?'<button class="btn r" id="mdx">Verwijderen</button>':"<span></span>"}<span><button class="btn g" id="mcx">Annuleer</button> <button class="btn" id="msx">Opslaan</button></span></div>`);
   const h=async e=>{const f=(e.target.files||[])[0];if(!f)return;grab();
@@ -429,20 +439,17 @@ function lightbox(id){const o=document.createElement("div");o.style.cssText="pos
 function bkMig(){["gf","sb"].forEach(k=>{const o=S[k];if(!o)return;o.docs=o.docs||[];o.photos=o.photos||[];o.notes=o.notes||[];o.notes.forEach(n=>{if(n.ph&&n.ph.length){n.ph.forEach(i=>o.photos.push({id:i,d:n.c||iso(new Date()),c:n.t||""}));delete n.ph}});o.notes=o.notes.filter(n=>(n.t&&n.t.trim())||(n.n&&n.n.trim()))})}
 function GfNotesV(){const o=B(),ph=(o.photos||[]).slice().sort((a,b)=>(b.d||"").localeCompare(a.d||"")),nt=(o.notes||[]).slice().reverse();
  const miss=ph.filter(p=>thumbs[p.id]===undefined);if(miss.length)ensureTh(miss.map(p=>p.id)).then(()=>{if(view==="gfn")render()});
- return `<div class="row"><h2>Notities ${esc(BI().n)}</h2><span class="rh"><button class="cam" data-a="gfpc" aria-label="Foto toevoegen">📷</button><button class="add" data-a="gfnew" aria-label="Notitie toevoegen">+</button></span></div>
+ return `<div class="row"><h2>Notities ${esc(BI().n)}</h2><span class="rh"><button class="pen padd" data-a="gfpc" aria-label="Foto toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg></button><button class="pen padd" data-a="gfnew" aria-label="Notitie toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></span></div>
  <div class="sec">Foto's (${ph.length})</div>
- ${ph.length?`<div class="pg">${ph.map(p=>`<div class="ph2" data-a="gfpv:${p.id}">${thumbs[p.id]?`<img src="${thumbs[p.id]}" alt="">`:""}${p.c?`<div class="cap">${esc(p.c)}</div>`:""}</div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen foto\'s. Tik op 📷 om er een te maken.</div>'}
+ ${ph.length?`<div class="pg">${ph.map(p=>`<div class="ph2" data-a="gfpv:${p.id}">${thumbs[p.id]?`<img src="${thumbs[p.id]}" alt="">`:""}${p.c?`<div class="cap">${esc(p.c)}</div>`:""}</div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen foto\'s. Tik op het camera-icoon om er een te maken.</div>'}
  <div class="sec">Getypte notities (${nt.length})</div>
  ${nt.map(x=>`<div class="vc" data-a="gfedit:${x.id}"><b style="font-size:14px">${esc(x.t||"Notitie")}</b>${x.c?`<span class="mu" style="font-size:11px;margin-left:8px">${dnl(x.c)}</span>`:""}${x.n&&x.n!==x.t?`<div class="mu" style="margin-top:3px">${esc(x.n.length>90?x.n.slice(0,90)+"…":x.n)}</div>`:""}</div>`).join("")||'<div class="mu" style="margin:8px 2px">Nog geen notities. Tik op + om er een te typen.</div>'}`}
 function gfNoteForm(id){const L=B().notes=B().notes||[],x=id&&L.find(n=>n.id===id);
  form(x?"Notitie":"Nieuwe notitie",[["t","Titel"],["n","Notitie","area"]],{t:x?x.t:"",n:x?x.n:""},o=>{if(x){x.t=o.t;x.n=o.n}else L.push({id:uid(),t:o.t,n:o.n,c:iso(new Date())});save();render()},x?()=>{B().notes=L.filter(n=>n!==x);save();render()}:undefined)}
 function bkPhotoPick(){
- openM(`<h2 style="text-align:center">Foto toevoegen</h2>
- <label class="btn pbtn">📷 Foto maken<input type="file" accept="image/*" capture="environment" id="pc1"></label>
- <label class="btn g pbtn">🖼️ Kies uit galerij<input type="file" accept="image/*" multiple id="pc2"></label>
- <button class="btn g" id="pcx" style="width:100%;margin-top:6px">Annuleren</button>`);
+ openM(`<h2>Foto toevoegen</h2><div class="pics"><label class="pic" title="Foto maken" aria-label="Foto maken"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg><input type="file" accept="image/*" capture="environment" id="pc1"></label><label class="pic" title="Kies uit galerij" aria-label="Kies uit galerij"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4.5 3.5"/></svg><input type="file" accept="image/*" multiple id="pc2"></label></div>`);
  const h=e=>{const fs=[...(e.target.files||[])];if(!fs.length)return;closeM();bkAddFiles(fs)};
- $("#pc1").onchange=h;$("#pc2").onchange=h;$("#pcx").onclick=closeM}
+ $("#pc1").onchange=h;$("#pc2").onchange=h}
 async function bkAddFiles(fs){const o=B();o.photos=o.photos||[];const added=[];
  for(const f of fs){try{const r=await procImg(f),id=uid();await idbPut(id,r);thumbs[id]=URL.createObjectURL(r.thumb);const p={id,d:iso(new Date()),c:""};o.photos.push(p);added.push(p)}
   catch(e){msg("Foto opslaan lukt niet ("+((e&&(e.name||e.message))||"onbekende fout")+").");break}}
@@ -467,9 +474,10 @@ function pdfLoad(){
  return pdfLib}
 async function pdfThumb(pg,w,q){const v1=pg.getViewport({scale:1}),k=w/v1.width,vp=pg.getViewport({scale:k}),c=document.createElement("canvas");c.width=Math.round(vp.width);c.height=Math.round(vp.height);const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);
  await pg.render({canvasContext:x,canvas:c,viewport:vp}).promise;return await new Promise(r=>c.toBlob(r,"image/jpeg",q))}
+document.addEventListener("change",e=>{const t=e.target;if(t&&t.id==="dpf"&&t.closest(".row")){const fs=[...(t.files||[])];t.value="";if(fs.length)docAdd(fs)}});
 function docPick(){
- openM(`<h2 style="text-align:center">Document toevoegen</h2><div class="mu" style="text-align:center;margin-bottom:8px">Kies een of meer PDF-bestanden van je telefoon.</div><label class="btn pbtn">📄 PDF kiezen<input type="file" accept="application/pdf,.pdf" multiple id="dpf"></label><button class="btn g" id="dpx" style="width:100%;margin-top:6px">Annuleren</button>`);
- $("#dpf").onchange=e=>{const fs=[...(e.target.files||[])];if(fs.length){closeM();docAdd(fs)}};$("#dpx").onclick=closeM}
+ openM(`<h2>Document toevoegen</h2><div class="mu">Kies een of meer PDF-bestanden van je telefoon.</div><div class="pics"><label class="pic" title="PDF kiezen" aria-label="PDF kiezen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 17v-6M9.2 13.5L12 10.7l2.8 2.8"/></svg><input type="file" accept="application/pdf,.pdf" multiple id="dpf"></label></div>`);
+ $("#dpf").onchange=e=>{const fs=[...(e.target.files||[])];if(fs.length){closeM();docAdd(fs)}}}
 async function docAdd(fs){
  const o=B();o.docs=o.docs||[];let ok=0;const bad=[];
  for(let i=0;i<fs.length;i++){const f=fs[i];
@@ -499,8 +507,8 @@ function dFill(){const h=$("#dcov");if(!h)return;const L=B().docs||[];if(!L.leng
 function dGo(dir){const L=B().docs||[],n=dIdx+dir,h=$("#dcov");if(!h||n<0||n>=L.length)return;dIdx=n;flipSwap(h,dCover(L[n]),dir);dCap()}
 function DocsSec(){const o=B(),L=o.docs||[];
  const miss=L.filter(x=>thumbs[x.id]===undefined);if(miss.length)ensureTh(miss.map(x=>x.id)).then(()=>{if(view==="gfv")render()});
- return `<div class="row" style="margin-top:16px"><h2>Documenten</h2><button class="add" data-a="gfdadd" aria-label="Document toevoegen">+</button></div>`+
- (L.length?`<div class="dbook"><button class="dnv" data-a="dprev" aria-label="Vorige">‹</button><div class="flip dcov" id="dcov" data-a="dopen"></div><button class="dnv" data-a="dnext" aria-label="Volgende">›</button></div><div class="dcr"><span id="dcap" class="mu"></span><button class="btn g" data-a="dmenu" style="padding:5px 14px">⋯</button></div>`:'<div class="mu" style="margin:8px 2px">Nog geen documenten. Tik op + om een PDF toe te voegen.</div>')}
+ return `<div class="row" style="margin-top:16px"><h2>Documenten</h2><label class="pic" style="width:38px;height:38px" title="PDF toevoegen" aria-label="PDF toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 17v-6M9.2 13.5L12 10.7l2.8 2.8"/></svg><input type="file" accept="application/pdf,.pdf" multiple id="dpf"></label></div>`+
+ (L.length?`<div class="dbook"><button class="dnv" data-a="dprev" aria-label="Vorige">‹</button><div class="flip dcov" id="dcov" data-a="dopen"></div><button class="dnv" data-a="dnext" aria-label="Volgende">›</button></div><div class="dcr"><span id="dcap" class="mu"></span><button class="btn g" data-a="dmenu" style="padding:5px 14px">⋯</button></div>`:'<div class="mu" style="margin:8px 2px">Nog geen documenten. Tik op het icoon om een PDF toe te voegen.</div>')}
 /* lezer */
 function pvClose(){const v=document.getElementById("pdfv");if(v)v.remove();if(pv&&pv.tk){try{pv.tk.destroy()}catch(e){}}pv=null;try{schedSync()}catch(e){}}
 async function pdfOpen(id){
@@ -575,12 +583,12 @@ function Home(){
  const n=new Date(),sec=t=>`<div class="sec">${t}</div>`,cm=mon(),hi=S.todo.filter(x=>!x.x&&x.p==="Hoog");
  const tl=(k,l,c)=>`<button class="tile" data-go="${k[0]}">${c!==""?`<span class="bd">${c}</span>`:""}${ic(k[1])}<b>${l}</b></button>`;
  const wv=!waveDone;if(wv)setTimeout(()=>{waveDone=true},6500);
- return `<h1>${greet()}${nm()?" "+esc(nm()):""} <span class="${wv?"wv":""}" style="display:inline-block">👋</span></h1><div class="fw">Fijne werkdag</div><div class="datebox">📅 ${n.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} &nbsp;|&nbsp; Week ${wk(n)}</div>
- ${bkBanner()}${sec("Vandaag")}${planning()}${brief(true)}
- ${sec("Management")}<div class="grid">${tl(["roster","p"],"Wie werkt er",rows(iso(n)).length)}${tl(["logs","l"],"Logboek","")}${tl(["todo","t"],"To Do",S.todo.filter(x=>!x.x).length)}${tl(["counts","c"],"Tellingen",S.counts.reduce((a,g)=>a+vis(g,cm).filter(i=>!(i.done||{})[cm]).length,0))}</div>
- ${sec("Aandacht")}<div class="card big" data-a="ea" style="cursor:pointer"><div class="row"><b class="ct">Extra aandacht</b><b>›</b></div>${eaList().map(x=>`<div class="mu" style="font-size:13px">• ${esc(x)}</div>`).join("")||'<div class="mu">Geen urgente taken. Tik om aandachtspunten te kiezen.</div>'}</div>
- <div class="card big"><b class="ct">Snelle notitie</b><textarea id="qn" rows="3" placeholder="Schrijf hier een korte notitie..."></textarea><div class="two"><button class="btn g" data-a="qs">Notitie opslaan</button><button class="btn g" data-a="pcam">📷 Foto</button><button class="btn g" data-go="notes">Notities</button></div></div>
- ${sec("Acties")}${sparCard()}<div style="height:10px"></div>${gfCard()}`;
+ return `<h1>${greet()}${nm()?" "+esc(nm()):""} <span class="${wv?"wv":""}" style="display:inline-block">👋</span></h1>${n.getHours()>=5&&n.getHours()<12?'<div class="fw">Fijne werkdag</div>':'<div style="height:8px"></div>'}<div class="datebox">📅 ${n.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} &nbsp;|&nbsp; Week ${wk(n)}</div>
+ ${bkBanner()}<div style="height:12px"></div>${planning()}${brief(true)}
+ <div class="grid">${tl(["roster","p"],"Wie werkt er",rows(iso(n)).length)}${tl(["logs","l"],"Logboek","")}${tl(["todo","t"],"To Do",S.todo.filter(x=>!x.x).length)}${tl(["counts","c"],"Tellingen",S.counts.reduce((a,g)=>a+vis(g,cm).filter(i=>!(i.done||{})[cm]).length,0))}</div>
+ <div class="card big" data-a="ea" style="cursor:pointer"><div class="row"><b class="ct">Extra aandacht</b><b>›</b></div>${eaList().map(x=>`<div class="mu" style="font-size:13px">• ${esc(x)}</div>`).join("")||'<div class="mu">Geen urgente taken. Tik om aandachtspunten te kiezen.</div>'}</div>
+ <div class="card big"><b class="ct">Snelle notitie</b><textarea id="qn" rows="3" placeholder="Schrijf hier een korte notitie..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:10px"><button class="btn g" data-a="qs" style="flex:1;margin:0">Notitie opslaan</button><button class="pen padd" data-a="pcam" aria-label="Foto toevoegen" title="Foto toevoegen" style="flex:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg></button><button class="btn g" data-go="notes" style="flex:1;margin:0">Notities</button></div></div>
+ ${sparCard()}<div style="height:10px"></div>${gfCard()}`;
 }
 function Roster(){return `<h2>Wie werkt er</h2>`+planning(true)}
 function Info(){return `<h2>Managerinformatie</h2>`+brief()}
@@ -607,7 +615,7 @@ document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;const[a,...r]=t.dataset.a.split(":"),v=r.join(":");
  if(a==="day"){day=v;render()}
  else if(a==="wk"){const x=fromIso(day);x.setDate(x.getDate()+ +v);day=iso(x);render()}
- else if(a==="menu"){const mm=$("#modal");if(mm.classList.contains("on")&&mm.classList.contains("dd")){closeM();return}dropMenu([["Tellingen instellen",()=>{view="tcfg";render()}],["Mijn naam wijzigen",askName],["Bakery op mijn station",bkPick],["Donker / licht",theme],["Info station",()=>{view="stn";render()}],["Back-up",()=>pick("Back-up",[["Back-up maken",backupMenu,"p"],["Back-up terugzetten",restorePick]])],["App-info",aboutApp]])}
+ else if(a==="menu"){const mm=$("#modal");if(mm.classList.contains("on")&&mm.classList.contains("dd")){closeM();return}dropMenu([["Tellingen instellen",()=>{tcFrom=false;view="tcfg";render()},"","cnt"],["Mijn naam wijzigen",askName,"","usr"],["Mijn Bakery",bkPick,"","bak"],["Donker / licht",theme,"","thm"],["Info station",()=>{view="stn";render()},"","stn"],["Back-up",()=>pick("Back-up",[["Back-up maken",backupMenu,"p"],["Back-up terugzetten",restorePick]]),"","bkp"],["App-info",aboutApp,"","inf"]])}
  else if(a==="padd"){if(!S.emp.length){msg("Voeg eerst medewerkers toe via het menu (Medewerkers beheren).");return}
   form("Medewerker inplannen",[["n","Medewerker","emp"],["s","Dienst","select",SH]],{s:"Vroeg"},o=>{ensure(day,o.s);if(!S.roster[day][o.s].includes(o.n))S.roster[day][o.s].push(o.n);save();render()})}
  else if(a==="row"){const[d,s,...q]=v.split("|"),n=q.join("|");S.abs[d]=S.abs[d]||{};S.rep[d]=S.rep[d]||{};
@@ -617,7 +625,7 @@ document.addEventListener("click",e=>{
    ["Van rooster halen",()=>{S.roster[d][s]=S.roster[d][s].filter(x=>x!==n);delete S.abs[d][n];delete S.rep[d][n];save();render()},"r"]])}
  else if(a==="qs"){const q=$("#qn").value.trim();if(!q)return;S.notes.push({id:uid(),t:q.slice(0,40),n:q,c:iso(new Date())});save();render();setSt("✓ Notitie opgeslagen")}
  else if(a==="sp"){view="sparv";render();scrollTo(0,0)}
- else if(a==="bf"){try{localStorage.setItem("egbrief",bfOpen()?"0":"1")}catch(e){}render()}
+ else if(a==="bf"){const was=bfOpen();try{localStorage.setItem("egbrief",was?"0":"1")}catch(e){}render();try{const h=document.querySelector("[data-a=bf]");if(h){const c=was?h:h.closest(".card");c.classList.remove("bfo","bfc");void c.offsetWidth;c.classList.add(was?"bfc":"bfo")}}catch(x){}}
  else if(a==="ea")eaEdit();
  else if(a==="gf"){view="gfv";render();scrollTo(0,0)}
  else if(a==="gfma")gfItemForm(-1);
@@ -635,7 +643,7 @@ document.addEventListener("click",e=>{
  else if(a==="gfnew")gfNoteForm(null);
  else if(a==="gfedit")gfNoteForm(v);
  else if(a==="gfpv")bkPhotoView(v)
- else if(a==="gfr")ask(BI().d+" resetten? Menu en datums worden gewist. Notities en foto's blijven staan.",()=>{(B().items||[]).forEach(x=>{if(x.ph)idbDel(x.ph).catch(()=>{})});S[bkk()]={t:B().t||BI().d,d:"",e:"",items:[],notes:B().notes||[],photos:B().photos||[],docs:B().docs||[]};save();render()})
+ else if(a==="gfr")askPop(t,"Menu en datums wissen? Notities, foto's en documenten blijven staan.",()=>{(B().items||[]).forEach(x=>{if(x.ph)idbDel(x.ph).catch(()=>{})});S[bkk()]={t:B().t||BI().d,d:"",e:"",items:[],notes:B().notes||[],photos:B().photos||[],docs:B().docs||[]};save();render()})
  else if(a==="vp"){const l=S.vp[S.vp.length-1],mm=m=>S.vp.filter(x=>x.slice(0,7)!==m.slice(0,7));form("Villa Pardoes: maandelijkse afslag",[["d","Datum afgeslagen","date"]],{d:l&&l.slice(0,7)===mon()?l:iso(new Date())},o=>{S.vp=mm(o.d);S.vp.push(o.d);S.vp.sort();save();render()},l?()=>{S.vp=mm(l);save();render()}:null)}
 });
 
@@ -644,12 +652,11 @@ const mlab=m=>{const[y,q]=m.split("-");return new Date(+y,+q-1,1).toLocaleDateSt
 const cdate=v=>typeof v==="string"&&v.length>6?"✓ "+v.split("-").reverse().join("-"):"✓ Geteld";
 function Counts(){
  if(cG>=S.counts.length)cG=0;const g=S.counts[cG],hid=g?((S.mp[+cM.slice(5)-1]||{})[g.name]||[]):[],it=g?g.items.filter(x=>!hid.includes(x.n)):[],dn=it.filter(i=>(i.done||{})[cM]).length;
- return `<h2>Tellingen</h2><div class="mbar"><button class="sq" data-a="cm:-1">‹</button><b>${mlab(cM)}</b><button class="sq" data-a="cm:1">›</button></div>
+ return `<div class="row"><h2>Tellingen</h2><button class="pen padd" data-a="tcg" aria-label="Tellingen beheren" title="Tellingen beheren"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div><div class="mbar"><button class="sq" data-a="cm:-1">‹</button><b>${mlab(cM)}</b><button class="sq" data-a="cm:1">›</button></div>
  <div class="seg">${S.counts.map((x,i)=>`<button class="${i===cG?"on":""}" data-a="cg:${i}">${esc(x.name)}</button>`).join("")}</div>
  <h3 style="margin:14px 2px 8px">Subcategorieën</h3>
  ${g?`<div class="card pc">${esc(g.name)}: ${dn} van ${it.length} ingevulde subcategorieën gedaan<div class="pb"><i style="width:${it.length?dn/it.length*100:0}%"></i></div></div>
- ${it.map(x=>{const i=g.items.indexOf(x),v=(x.done||{})[cM];return `<div class="ci" data-cr="${i}"><span>${esc(x.n)}</span><button class="cb ${v?"d":""}" data-a="ci:${i}">${v?cdate(v):"Telling gedaan"}</button></div>`}).join("")||'<div class="mu">Nog geen subcategorieën. Voeg ze toe via Beheer.</div>'}
- <button class="btn g" data-a="cbeh" style="width:100%;margin:6px 0 20px;border-radius:14px">Beheer</button>`:""}`;
+ ${it.map(x=>{const i=g.items.indexOf(x),v=(x.done||{})[cM];return `<div class="ci" data-cr="${i}"><span>${esc(x.n)}</span><button class="cb ${v?"d":""}" data-a="ci:${i}">${v?cdate(v):"Telling gedaan"}</button></div>`}).join("")||'<div class="mu">Nog geen subcategorieën. Voeg ze toe via Beheer.</div>'}`:""}`;
 }
 function cEdit(i){
  const x=S.counts[cG].items[i],cur=x.done[cM],dv=typeof cur==="string"&&cur.length>6?cur:iso(new Date());
@@ -666,6 +673,7 @@ document.addEventListener("click",e=>{
   if(x.done[cM])cEdit(+v);else{x.done[cM]=cM===mon()?iso(new Date()):cM+"-01";popSel=`[data-a="ci:${v}"],.pc .pb i`;save();render()}}
  else if(a==="cadd")form("Nieuwe subcategorie",[["n","Naam"]],{},o=>{S.counts[cG].items.push({n:o.n,done:{}});save();render()});
  else if(a==="cbeh")grp(cG);
+ else if(a==="tcg"){tcFrom=true;view="tcfg";render();scrollTo(0,0)}
  else if(a==="cgrp")form("Nieuwe categorie",[["name","Naam"]],{},o=>{S.counts.push({name:o.name,items:[]});cG=S.counts.length-1;save();render()});
 });
 
@@ -748,11 +756,10 @@ const stt=x=>x.st||(x.x?"klaar":"open");
 const pcol=p=>p==="Hoog"?"#dc373c":p==="Laag"?"#eb912d":"#8dc010";
 function TodoV(){
  const c=k=>S.todo.filter(x=>stt(x)===k).length,tot=S.todo.length,dn=c("klaar"),L=S.todo.filter(x=>stt(x)===tf);
- return `<div class="row"><h2>To Do</h2><button class="add" data-new="todo" aria-label="Toevoegen">+</button></div>
+ return `<div class="row"><h2>To Do</h2><span style="display:flex;align-items:center;gap:6px"><button class="pen" data-a="trs" aria-label="Takenlijst resetten"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></svg></button><button class="pen padd" data-new="todo" aria-label="Taak toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></span></div>
  <div class="card pc"><b style="font-size:16px">${dn} van de ${tot} taken klaar</b><div class="pb or"><i style="width:${tot?dn/tot*100:0}%"></i></div><div class="mu" style="margin-top:10px;font-size:13px">Tik op een open taak om hem actief te maken en daarna af te ronden</div></div>
  <div class="seg tg" style="margin-top:10px">${[["open","Open"],["actief","Actief"],["klaar","Klaar"]].map(([k,l])=>`<button class="${tf===k?"on":""}" data-a="tf:${k}">● ${l} (${c(k)})</button>`).join("")}</div>
- ${L.map(x=>`<div class="tcard" data-a="ts:${x.id}"><span class="tbar" style="background:${pcol(x.p)}"></span><div class="tb"><b>${esc(x.t)}</b><div class="mu" style="font-size:13px">${esc(x.p||"Normaal")}${x.r&&x.r!==REP[0]?" · "+esc(x.r):""}</div>${x.u?`<div class="mu" style="font-size:13px">Onderwerp: ${esc(x.u)}</div>`:""}</div><span class="tst">${stt(x).toUpperCase()}</span><button class="kb" data-a="tm:${x.id}" aria-label="Meer">⋮</button></div>`).join("")||'<div class="mu" style="margin:14px 4px">Geen taken in deze lijst.</div>'}
- <button class="btn" data-a="trs" style="width:100%;margin:10px 0 20px;padding:12px;border-radius:18px;font-size:15px">↺ Reset</button>`;
+ ${L.map(x=>`<div class="tcard" data-a="ts:${x.id}"><span class="tbar" style="background:${pcol(x.p)}"></span><div class="tb"><b>${esc(x.t)}</b><div class="mu" style="font-size:13px">${esc(x.p||"Normaal")}${x.r&&x.r!==REP[0]?" · "+esc(x.r):""}</div>${x.u?`<div class="mu" style="font-size:13px">Onderwerp: ${esc(x.u)}</div>`:""}</div><span class="tst">${stt(x).toUpperCase()}</span><button class="kb" data-a="tm:${x.id}" aria-label="Meer">⋮</button></div>`).join("")||'<div class="mu" style="margin:14px 4px">Geen taken in deze lijst.</div>'}`;
 }
 function setSt2(x,k){x.st=k;x.x=k==="klaar";save();render()}
 document.addEventListener("click",e=>{
@@ -761,9 +768,14 @@ document.addEventListener("click",e=>{
  else if(a==="ts"){const x=S.todo.find(y=>y.id===v);if(!x)return;const k=stt(x);const nk=k==="open"?"actief":k==="actief"?"klaar":"open";if(nk==="klaar")popSel=".pc .pb i";setSt2(x,nk)}
  else if(a==="tm"){const x=S.todo.find(y=>y.id===v);if(!x)return;
   pick(x.t,[["Bewerken",()=>editItem("todo",x)],...(stt(x)!=="open"?[["Terug naar open",()=>setSt2(x,"open")]]:[]),["Verwijderen",()=>{ask("Taak verwijderen?",()=>{S.todo=S.todo.filter(y=>y!==x);save();render()})},"r"]])}
- else if(a==="trs"){ask("Alle taken terugzetten naar de standaardlijst?",()=>{S.todo=DEFT();tf="open";save();render()})}
+ else if(a==="trs"){askPop(t,"Alle taken terugzetten naar de standaardlijst?",()=>{S.todo=DEFT();tf="open";save();render()})}
 });
 
+function askPop(el,m,cb){
+ openM(`<div style="font-size:14px;font-weight:600;padding:8px 2px 10px;line-height:1.35">${esc(m)}</div><div class="two"><button class="btn g" id="an" style="padding:7px 0;font-size:14px">Annuleren</button><button class="btn r" id="aj" style="padding:7px 0;font-size:14px">Reset</button></div>`);
+ const mm=$("#modal"),r=el.getBoundingClientRect();mm.classList.add("dd");mm.style.top=Math.round(r.bottom+4)+"px";
+ const w=Math.min(250,innerWidth-16);$("#sheet").style.width=w+"px";$("#sheet").style.marginLeft=Math.max(8,Math.min(innerWidth-w-8,Math.round(r.left+r.width/2-w/2)))+"px";
+ $("#an").onclick=closeM;$("#aj").onclick=()=>{closeM();cb()}}
 function ask(m,cb){openM(`<h2 style="text-align:center;font-size:17px">${esc(m)}</h2><div class="two"><button class="btn g" id="an">Annuleren</button><button class="btn r" id="aj">Ja</button></div>`);$("#an").onclick=closeM;$("#aj").onclick=()=>{closeM();cb()}}
 function msg(t){openM(`<h2 style="text-align:center;font-size:17px">${esc(t)}</h2><button class="btn" id="mo" style="width:100%;margin-top:10px">OK</button>`);$("#mo").onclick=closeM}
 document.addEventListener("click",e=>{if(Date.now()-lpt<800&&e.target.closest("[data-cr]")){e.stopPropagation();e.preventDefault()}},true);
@@ -892,7 +904,9 @@ document.addEventListener("click",e=>{
 
 const AGE="Eigen medewerker",AGS=()=>[AGE,...S.agl],AGP=["#8dc010","#4aa3e8","#e8a23a","#b36be0","#e0607a","#2ab5a5"];
 function agb(n){const a=S.ag[n];if(!a)return"";const i=S.agl.indexOf(a),c=AGP[(i<0?0:i)%AGP.length];return `<span class="agb" style="border-color:${c};color:${c}">${esc(a)}</span>`}
-function agMenu(){const o=S.agl.map((a,i)=>[a+" · "+(c=>c+(c===1?" medewerker":" medewerkers"))(S.emp.filter(n=>S.ag[n]===a).length),()=>agEdit(i)]);o.push(["+ Uitzendbureau toevoegen",()=>agEdit(-1),"p"]);pick("Uitzendbureaus",o)}
+function agMenu(){const o=S.agl.map((a,i)=>[a+" · "+(c=>c+(c===1?" medewerker":" medewerkers"))(S.emp.filter(n=>S.ag[n]===a).length),()=>agEdit(i)]);openM(`<div class="row"><h2>Uitzendbureaus</h2><button class="pen padd" id="agp" aria-label="Uitzendbureau toevoegen" title="Uitzendbureau toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></div>`+(o.map((x,i)=>`<button class="btn g" style="display:block;width:100%;margin:8px 0" data-i="${i}">${esc(x[0])}</button>`).join("")||'<div class="mu" style="margin:8px 0">Nog geen uitzendbureaus. Tik op + om er een toe te voegen.</div>'));
+ $("#agp").onclick=()=>{closeM();setTimeout(()=>agEdit(-1),60)};
+ document.querySelectorAll("#sheet [data-i]").forEach(b=>b.onclick=()=>{closeM();setTimeout(o[b.dataset.i][1],60)})}
 function agEdit(i){const old=i<0?"":S.agl[i];
  form(i<0?"Nieuw uitzendbureau":"Uitzendbureau",[["n","Naam"]],{n:old},o=>{const n=(o.n||"").trim();if(!n){msg("Vul een naam in.");return}
   if(n===AGE||S.agl.some((x,j)=>j!==i&&x.toLowerCase()===n.toLowerCase())){msg("Deze naam bestaat al.");return}
@@ -1030,7 +1044,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ---------- foto's bij notities ---------- */
-let thumbs={},thLoad=false;
+let tcFrom=false;let thumbs={},thLoad=false;
 const idb=()=>new Promise((res,rej)=>{try{const r=indexedDB.open("egphotos",1);r.onupgradeneeded=()=>r.result.createObjectStore("p");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}});
 const idbTx=(m,f)=>idb().then(db=>new Promise((res,rej)=>{const t=db.transaction("p",m),st=t.objectStore("p"),q=f(st);t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)}));
 const idbPut=(k,v)=>idbTx("readwrite",s=>s.put(v,k)),idbGet=k=>idbTx("readonly",s=>s.get(k)),idbDel=k=>idbTx("readwrite",s=>s.delete(k));
@@ -1043,9 +1057,9 @@ function NotesV(){
  const miss=S.photos.filter(p=>thumbs[p.id]===undefined);
  if(miss.length&&!thLoad){thLoad=true;Promise.all(miss.map(p=>idbGet(p.id).then(v=>{thumbs[p.id]=v&&v.thumb?URL.createObjectURL(v.thumb):""}).catch(()=>{thumbs[p.id]=""}))).then(()=>{thLoad=false;if(view==="notes")render()})}
  const ph=S.photos.slice().sort((a,b)=>(b.d||"").localeCompare(a.d||"")||0),nt=S.notes.slice().reverse();
- return `<div class="row"><h2>Notities</h2><span class="rh"><button class="cam" data-a="pcam" aria-label="Foto toevoegen">📷</button><button class="add" data-new="notes" aria-label="Notitie toevoegen">+</button></span></div>
+ return `<div class="row"><h2>Notities</h2><span class="rh"><button class="pen padd" data-a="pcam" aria-label="Foto toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2 2 0 0 1 6 6.5h2l1.4-2h5.2l1.4 2h2a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.3"/></svg></button><button class="pen padd" data-new="notes" aria-label="Notitie toevoegen"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></span></div>
  <div class="sec">Foto's (${ph.length})</div>
- ${ph.length?`<div class="pg">${ph.map(p=>`<div class="ph2" data-a="pview:${p.id}">${thumbs[p.id]?`<img src="${thumbs[p.id]}" alt="">`:""}${p.c?`<div class="cap">${esc(p.c)}</div>`:""}</div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen foto\'s. Tik op 📷 om er een te maken.</div>'}
+ ${ph.length?`<div class="pg">${ph.map(p=>`<div class="ph2" data-a="pview:${p.id}">${thumbs[p.id]?`<img src="${thumbs[p.id]}" alt="">`:""}${p.c?`<div class="cap">${esc(p.c)}</div>`:""}</div>`).join("")}</div>`:'<div class="mu" style="margin:8px 2px">Nog geen foto\'s. Tik op het camera-icoon om er een te maken.</div>'}
  <div class="sec">Getypte notities (${nt.length})</div>
  ${nt.map(x=>`<div class="vc" data-edit="notes:${x.id}"><b style="font-size:14px">${esc(x.t||"Notitie")}</b>${x.c?`<span class="mu" style="font-size:11px;margin-left:8px">${dnl(x.c)}</span>`:""}${x.n&&x.n!==x.t?`<div class="mu" style="margin-top:3px">${esc(x.n.length>90?x.n.slice(0,90)+"…":x.n)}</div>`:""}</div>`).join("")||'<div class="mu" style="margin:8px 2px">Nog geen notities. Tik op + om er een te typen.</div>'}`;
 }
@@ -1148,9 +1162,8 @@ function matchEmp(name){
 const DEFMAP={V:"S:Vroeg",L:"S:Laat",N:"S:Nacht",T:"S:Tussendienst",B:"S:Bakery 1",B1:"S:Bakery 1",B2:"S:Bakery 2",K:"-",X:"-",BHV:"-",VS:"-",LS:"-",TS:"-"};
 const cmOpts=()=>[...SH.map(x=>["S:"+x,x]),["-","Overslaan"],["A:Verlof","Afwezig: verlof"],["A:Vakantie","Afwezig: vakantie"],["A:Ziek","Afwezig: ziek"]];
 function impDlg(){
- openM(`<h2 style="text-align:center">Rooster importeren</h2><div class="mu" style="margin-bottom:6px">Kies het Excel-bestand (.xlsx) met het rooster. Het wordt alleen op je telefoon gelezen.</div>
- <label class="btn pbtn">📥 Excel-bestand kiezen<input type="file" id="imf"></label><button class="btn g" id="imx" style="width:100%;margin-top:6px">Annuleren</button>`);
- $("#imx").onclick=closeM;
+ openM(`<h2>Rooster importeren</h2><div class="mu" style="margin-bottom:2px">Het Excel-bestand (.xlsx) wordt alleen op je telefoon gelezen.</div>
+ <label class="btn g pbtn" style="margin:8px 0;font-size:13px">Excel-bestand kiezen<input type="file" id="imf"></label>`);
  $("#imf").onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;
   try{const sheets=await readXlsx(f),ok=sheets.map((sh,i)=>[i,analyze(sh)]).filter(x=>x[1]);
    if(!ok.length){msg("Ik kan in dit bestand geen rooster vinden (rij met dagen 1 t/m 28-31 en namen ernaast).");return}
@@ -1210,13 +1223,11 @@ function SparV(){
  if(p.d&&p.e){const a=fromIso(p.d),b=fromIso(p.e),t=fromIso(iso(new Date())),left=Math.round((b-t)/864e5),tot=Math.max(1,(b-a)/864e5+1),el=Math.min(1,Math.max(0,(t-a)/864e5/tot));
   foot=`<div class="mu" style="margin-top:12px;font-size:14px">📅 ${dl(p.d)} t/m ${dl(p.e)}</div><div class="pl" style="margin-top:6px;display:inline-block">${left>0?"Nog "+left+" dagen":left===0?"Laatste dag":"Afgelopen"}</div><div class="bar" style="margin-top:8px"><i style="width:${Math.max(3,el*100)}%"></i></div>`}
  const po=S.po.slice().sort((x,y)=>(y.d||"").localeCompare(x.d||""));
- return `<div class="row"><span style="display:flex;align-items:center;gap:10px"><img src="${SPARLOGO}" alt="SPAR" style="height:26px"><h2 style="margin:0">${esc(p.t||"SPAR Actie")}</h2></span></div>
+ return `<div class="row"><span style="display:flex;align-items:center;gap:10px"><img src="${SPARLOGO}" alt="SPAR" style="height:26px"><h2 style="margin:0">${esc(p.t||"SPAR Actie")}</h2><button class="pen" data-a="spn" aria-label="Naam wijzigen"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><button class="pen" data-a="spr" aria-label="Promo's resetten"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></svg></button></span></div>
  <div class="spc" data-a="spe" style="margin-top:12px">${it.map(x=>`<div class="row sp"><span>${esc(x.n)}</span><span style="color:var(--green);font-weight:700">€ ${pr2(x.p)}</span></div>`).join("")||'<div class="mu">Tik om producten en datums toe te voegen.</div>'}${foot}</div>
- <button class="sbtn" data-a="spd">Datum aanpassen</button>
  <div class="sec">Push orders</div>
  <div class="row"><h2>Push orders</h2><button class="add" data-a="poadd" aria-label="Push order toevoegen">+</button></div>
- ${po.map(o=>`<div class="poc" data-a="poedit:${o.id}"><div><b>Push order · ${dnl(o.d)}</b>${o.bon?`<div class="mu" style="font-size:13px;margin-top:3px">Bonnummer ${esc(o.bon)}</div>`:""}<div class="g2">${(o.items||[]).length} producten geleverd</div></div><span class="ch">›</span></div>`).join("")||'<div class="mu" style="margin:8px 2px">Nog geen push orders. Tik op + om er een toe te voegen.</div>'}
- <button class="sbtn" data-a="spr">Promo's resetten</button>`;
+ ${po.map(o=>`<div class="poc" data-a="poedit:${o.id}"><div><b>Push order · ${dnl(o.d)}</b>${o.bon?`<div class="mu" style="font-size:13px;margin-top:3px">Bonnummer ${esc(o.bon)}</div>`:""}<div class="g2">${(o.items||[]).length} producten geleverd</div></div><span class="ch">›</span></div>`).join("")||'<div class="mu" style="margin:8px 2px">Nog geen push orders. Tik op + om er een toe te voegen.</div>'}`;
 }
 function poForm(o){
  const w=o?JSON.parse(JSON.stringify(o)):{id:uid(),d:iso(new Date()),bon:"",items:[]};w.items=w.items||[];
@@ -1238,15 +1249,16 @@ function poForm(o){
 document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;const[a,...r]=t.dataset.a.split(":"),v=r.join(":");
  if(a==="spe")spEdit();
+ else if(a==="spn")form("Naam wijzigen",[["n","Naam"]],{n:S.sp.t||"SPAR Actie"},o=>{S.sp.t=(o.n||"").trim()||"SPAR Actie";save();render()});
  else if(a==="spd"){const p=S.sp;form("Datum aanpassen",[["d","Start","date"],["e","Einde","date"]],{d:p.d,e:p.e},o=>{p.d=o.d||"";p.e=o.e||"";save();render()})}
- else if(a==="spr")ask("Promo's resetten? Producten en datums van de actie worden gewist. Push orders blijven staan.",()=>{S.sp={t:S.sp.t||"SPAR Actie",d:"",e:"",items:[]};save();render()});
+ else if(a==="spr")askPop(t,"Producten en datums wissen? Push orders blijven staan.",()=>{S.sp={t:S.sp.t||"SPAR Actie",d:"",e:"",items:[]};save();render()});
  else if(a==="poadd")poForm(null);
  else if(a==="poedit"){const o=S.po.find(y=>y.id===v);if(o)poForm(o)}
 });
 
 /* ---------- terugtoets (Android) ---------- */
 let hDepth=0,hSync=0,hT=0;
-const hLevel=()=>{const m=$("#modal"),sr=$("#srch");return (tab!=="home"?1:0)+(view?1:0)+(view==="gfn"?1:0)+(document.getElementById("pdfv")?1:0)+(m&&m.classList.contains("on")?1:0)+(sr&&sr.classList.contains("on")?1:0)};
+const hLevel=()=>{const m=$("#modal"),sr=$("#srch");return (tab!=="home"?1:0)+(view?1:0)+(view==="gfn"?1:0)+(view==="tcfg"&&tcFrom?1:0)+(document.getElementById("pdfv")?1:0)+(m&&m.classList.contains("on")?1:0)+(sr&&sr.classList.contains("on")?1:0)};
 function schedSync(){if(typeof history==="undefined"||!history.pushState)return;clearTimeout(hT);hT=setTimeout(()=>{
  if(hSync>0){schedSync();return}
  const L=hLevel();
@@ -1261,14 +1273,15 @@ if(typeof window!=="undefined"&&window.addEventListener)window.addEventListener(
  else if(sr&&sr.classList.contains("on")){sr.classList.remove("on");schedSync()}
  else if(m&&m.classList.contains("on")){closeM()}
  else if(view==="gfn"){view="gfv";render()}
+ else if(view==="tcfg"&&tcFrom){tcFrom=false;view="counts";render()}
  else if(view){view=null;render()}
  else if(tab!=="home"){tab="home";render()}
 });
 
-let lastKey,lastD=0,frT=0,popSel="";
-function anim(){const app=$("#app");if(!app||!app.classList)return;const key=view||("t:"+tab),d=view?(view==="gfn"?2:1):0,RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+let lastKey,lastD=0,frT=0,slT=0,popSel="";
+function anim(){const app=$("#app");if(!app||!app.classList)return;const key=view||("t:"+tab),d=view?((view==="gfn"||(view==="tcfg"&&tcFrom))?2:1):0,RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
  if(key!==lastKey){
-  if(lastKey!==undefined&&!RM){const c=d>lastD?"sRight":d<lastD?"sLeft":"sFade";app.classList.remove("sRight","sLeft","sFade");void app.offsetWidth;app.classList.add(c)}
+  if(lastKey!==undefined&&!RM){const c=d>lastD?"sRight":d<lastD?"sLeft":"sFade";app.classList.remove("sRight","sLeft","sFade");void app.offsetWidth;app.classList.add(c);clearTimeout(slT);slT=setTimeout(()=>app.classList.remove("sRight","sLeft","sFade"),420)}
   app.classList.add("fresh");clearTimeout(frT);frT=setTimeout(()=>app.classList.remove("fresh"),1000);
   if(!RM)document.querySelectorAll("#app .bd").forEach(el=>{const t=el.textContent.trim(),n=parseInt(t,10);if(n>0&&String(n)===t){const t0=performance.now(),f=ts=>{const k=Math.min(1,(ts-t0)/600);el.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);else el.textContent=n};requestAnimationFrame(f)}})}
  lastKey=key;lastD=d;
@@ -1323,7 +1336,7 @@ document.addEventListener("click",e=>{
  else if(d.grp!==undefined)grp(+d.grp);
  else if(d.newgrp!==undefined)form("Nieuwe telgroep",[["name","Naam"]],{},o=>{S.counts.push({name:o.name,items:[]});save();render()});
 });
-$("#back").onclick=()=>{if(hDepth>0&&typeof history!=="undefined")history.back();else{view=null;render()}};
+$("#back").onclick=()=>{if(hDepth>0&&typeof history!=="undefined")history.back();else if(view==="tcfg"&&tcFrom){tcFrom=false;view="counts";render()}else{view=null;render()}};
 init();
 if(!nm())setTimeout(()=>askName(true),2000);
 
